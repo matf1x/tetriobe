@@ -1,0 +1,30 @@
+{
+  "name": "tetriobe",
+  "version": "1.0.0",
+  "description": "Deze repository is gemaakt om de ontwikkelingen voor het TETR.IO Tournament bij te houden.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matf1x/tetriobe.git"
+  },
+  "keywords": [],
+  "author": "Fabian Tack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matf1x/tetriobe/issues"
+  },
+  "homepage": "https://github.com/matf1x/tetriobe#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
+    "request": "^2.88.2"
+  }
+}

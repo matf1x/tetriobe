@@ -1,0 +1,13 @@
+<%
+calculatePrices = function(wins, games) {
+    const perc = ((wins * 100) / games).toFixed(2);
+    const html = `(${perc}%)`;
+    return html;
+}
+
+formatXP = function(xp) {
+    var formatter = new Intl.NumberFormat('nl-BE');
+
+    return formatter.format(xp);
+}
+%>

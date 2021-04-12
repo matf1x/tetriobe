@@ -1,0 +1,38 @@
+<%- include('./functions.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+
+    <div class="content players">
+        <!-- Show the players -->
+        <% if (players.length > 0) { %>
+            <% players.forEach(player => { %>
+                <div class="player">
+                    <h2><%= player.username %> <img src="https://www.countryflags.io/<%= player.country %>/flat/64.png" alt=""></h2>
+                    <p>XP</p>
+                    <p class="bold"><%= formatXP(player.xp) %></p>
+                    <p>Win/games</p>
+                    <p class="bold"><%= player.gameswon %> / <%= player.gamesplayed %> <%= calculatePrices(player.gameswon, player.gamesplayed) %></p>
+                    <p>Last update</p>
+                    <p class="bold"><%= moment(player.updatedAt).locale('nl').format('DD MMMM YYYY - HH:mm') %></p>
+                </div>
+                
+            <% }) %>
+        <% } else { %>
+            <p>Er zijn nog geen spelers toegevoegd tot de lijst</p>
+        <% } %>
+    </div>
+    
+    <script>
+        var isAlert = <%= isAlert %>; 
+        if (isAlert === true) {
+            var alertTitle = "<%= alertTitle %>";
+
+            console.log(alertTitle);
+            alert(alertTitle);
+        }
+    </script>
+
+</body>
+</html>

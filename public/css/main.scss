@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Exo+2:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import 'normalize';
+
+:root {
+    --clr-primary: #6441a5;
+    --clr-text: #fff;
+    --clr-text-light: #ddd;
+    --clr-dark: #212121;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Alegreya Sans', sans-serif;
+}
+
+.content {
+    max-width: 1280px;
+    margin: 2rem auto;
+}
+
+.players {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    .player {
+        position: relative;
+        width: calc(25% - 2rem);
+        margin: 0 2rem 2rem 0;
+        background: var(--clr-dark);
+        border-radius: 10px;
+        padding: 1.5rem;
+        overflow: hidden;
+        -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.38);
+        -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.38);
+        box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.38);
+
+        .flag {
+            position: absolute;
+            top: -1rem; 
+            right: 0;
+            opacity: .7;
+            border-bottom-left-radius: 10px;
+            
+            img {
+                width: 64px;
+                border-bottom-left-radius: 10px;
+            }
+        }
+
+        h2 {
+            margin: 0 0 1rem 0;
+            padding: 0;
+            text-transform: uppercase;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.35rem;
+            text-shadow: 0px 0px 2px rgba(0, 2, 0, 1);
+            color: var(--clr-text);
+
+            img {
+                width: 20px;
+            }
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            color: var(--clr-text-light);
+        }
+
+        .bold {
+            font-weight: 700;
+            margin-bottom: .5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
