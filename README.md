@@ -1,2 +1,4 @@
-# tetriobe
-The Tetrio BE tournament site
+# TETR.IO Tournament
+Deze repository is gemaakt om de ontwikkelingen voor het TETR.IO Tournament bij te houden.
+
+We maken gebruik van de TETR.IO Channel API om eventuele opvolgingen te doen en er zal ook een free MongoDB database achter hangen om alles op te slaan.
