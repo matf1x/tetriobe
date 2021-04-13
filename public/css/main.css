@@ -52,6 +52,7 @@ nav ul {
           align-items: center;
   -webkit-transition: padding .15s ease-in-out;
   transition: padding .15s ease-in-out;
+  list-style: none;
 }
 
 nav ul li {
@@ -214,6 +215,28 @@ nav ul li:last-child a {
 }
 
 .info .content h2:last-child {
+  margin-bottom: 2rem;
+}
+
+.register {
+  background: var(--clr-dark);
+  padding: 2rem 0;
+}
+
+.register .content {
+  color: var(--clr-text);
+}
+
+.register .content h2 {
+  color: var(--clr-text);
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.register .content h2:last-child {
   margin-bottom: 2rem;
 }
 
