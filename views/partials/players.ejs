@@ -1,10 +1,6 @@
-<%- include('./functions.ejs') %>
-<!DOCTYPE html>
-<html lang="en">
-<%- include('./partials/head.ejs') %>
-<body>
-
-    <div class="content players">
+    <div class="players">
+        <h3>Aangemelde spelers</h3>
+        
         <!-- Show the players -->
         <% if (players.length > 0) { %>
             <% players.forEach(player => { %>
@@ -23,16 +19,3 @@
             <p>Er zijn nog geen spelers toegevoegd tot de lijst</p>
         <% } %>
     </div>
-    
-    <script>
-        var isAlert = <%= isAlert %>; 
-        if (isAlert === true) {
-            var alertTitle = "<%= alertTitle %>";
-
-            console.log(alertTitle);
-            alert(alertTitle);
-        }
-    </script>
-
-</body>
-</html>

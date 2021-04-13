@@ -1,12 +1,48 @@
+<%- include('./functions.ejs') %>
+<% currentPage = 'home' %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TETR.IO Tournament - Matf1x</title>
-</head>
+<%- include('./partials/head.ejs') %>
 <body>
     
+    <!-- Navigation -->
+    <%- include('./partials/navigation.ejs') %>
+
+    <div class="hero">
+
+        <div class="hero--text">
+            <h3>1ste grote</h3>
+            <h1>TETR.IO</h1>
+            <h2>Toernooi</h2>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <a href="#" class="focus">Inschrijven</a>
+                <a href="#" class="alt">Meer info</a>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="info">
+        <div class="content no-top-padding">
+            <h2>Het allereeste TETR.IO toernooi</h2>
+            <h2>ZATERDAG 1 MEI van ... tot ...</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
+        </div>
+    </section>
+
+    <div class="content no-top-padding">
+
+        <!-- The registered players -->
+        <%- include('./partials/players.ejs'); %>
+
+    </div>
+
+    <!-- The footer -->
+    <%- include('./partials/footer.ejs'); %>
+
 </body>
 </html>

@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Exo+2:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 :root {
-  --clr-primary: #6441a5;
+  --clr-primary: #fd7014;
   --clr-text: #fff;
+  --clr-light: rgb(236, 236, 236);
   --clr-text-light: #ddd;
   --clr-dark: #212121;
 }
@@ -17,9 +18,203 @@ html, body {
   font-family: 'Alegreya Sans', sans-serif;
 }
 
+nav {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--clr-dark);
+  padding: 0;
+  margin: 0;
+  border-bottom: 5px solid var(--clr-primary);
+  z-index: 100;
+}
+
+nav ul {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 2rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: padding .15s ease-in-out;
+  transition: padding .15s ease-in-out;
+}
+
+nav ul li {
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li img {
+  height: 50px;
+  -webkit-transition: height .15s ease-in-out;
+  transition: height .15s ease-in-out;
+}
+
+nav ul li a {
+  padding: 0 1.5rem;
+  color: var(--clr-text-light);
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  -webkit-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
+}
+
+nav ul li a:hover {
+  color: var(--clr-primary);
+}
+
+nav ul li a.no-padding {
+  padding: 0;
+}
+
+nav ul li .active {
+  color: var(--clr-primary);
+}
+
+nav ul li:first-child {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+nav ul li:last-child a {
+  padding: 0 0 0 1.5rem;
+}
+
+.minimize ul {
+  padding: 1rem 0;
+}
+
+.minimize ul li img {
+  height: 37.5px;
+}
+
+.no-top-padding {
+  padding-top: 0 !important;
+}
+
+.hero {
+  width: 100%;
+  background: var(--clr-dark);
+  height: 400px;
+  margin-top: 124px;
+  position: relative;
+}
+
+.hero--text {
+  margin: 0 auto;
+  height: 100%;
+  max-width: 1200px;
+  background-image: url("/bg-hero.png");
+  background-size: auto 700px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hero--text h3 {
+  color: var(--clr-text);
+  margin: 0;
+  padding: 95px 0 0 0;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+.hero--text h1 {
+  color: var(--clr-primary);
+  margin: 0;
+  padding: 0;
+  font-size: 4rem;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 3rem;
+}
+
+.hero--text h2 {
+  color: var(--clr-text);
+  margin: 0;
+  padding: 0 0 0 120px;
+  font-size: 2rem;
+}
+
+.hero--text .buttons {
+  margin-top: 4rem;
+}
+
+.hero--text .buttons a {
+  text-decoration: none;
+  font-family: 'Exo 2', sans-serif;
+  padding: .45rem 1.35rem;
+  border-radius: 10px;
+}
+
+.hero--text .buttons a.focus {
+  background: var(--clr-primary);
+  color: var(--clr-text);
+  border: 0;
+  margin-right: 2rem;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  border: 2px solid var(--clr-dark);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.hero--text .buttons a.focus:hover {
+  border: 2px solid var(--clr-primary);
+}
+
+.hero--text .buttons a.alt {
+  border: 2px solid var(--clr-text);
+  color: var(--clr-text);
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  font-weight: 400;
+}
+
+.hero--text .buttons a.alt:hover {
+  border: 2px solid var(--clr-primary);
+  color: var(--clr-primary);
+}
+
 .content {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 2rem auto;
+  padding-top: 124px;
+}
+
+.info {
+  background: var(--clr-light);
+  padding: 2rem 0;
+}
+
+.info .content h2 {
+  color: var(--clr-primary);
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.info .content h2:last-child {
+  margin-bottom: 2rem;
 }
 
 .players {
@@ -32,6 +227,18 @@ html, body {
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+.players h3 {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  color: var(--clr-primary);
+  font-family: 'Exo 2', sans-serif;
+  width: 100%;
+  text-align: center;
 }
 
 .players .player {

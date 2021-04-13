@@ -34,11 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // Default route
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Home'});
-});
-
-app.get('/users', async(req, res) => {
+app.get('/', async(req, res) => {
+    
     // First, call the API to get all the users
     const url = `${process.env.LOCALPATH}/api/users`;
 
@@ -56,16 +53,17 @@ app.get('/users', async(req, res) => {
         const body = await response.json();
 
         if(body.ok !== undefined)
-            return res.status(503).render('players', { title: 'Spelers', isAlert: true, alertTitle: "Er liep iets fout bij het ophalen van de gebruikers!", players: {} });
+            return res.status(503).render('index', { title: 'Home', isAlert: true, alertTitle: "Er liep iets fout bij het ophalen van de gebruikers!", players: {} });
         
         // Render the page
-        res.render('players', { title: 'Spelers', isAlert: false, alertTitle:'', players: body, moment });
+        res.render('index', { title: 'Home', isAlert: false, alertTitle:'', players: body, moment });
 
     } catch(err) {
         console.log(err);
-        return res.status(501).render('players', { title: 'Spelers', isAlert: true, alertTitle: "Er is een onverwachte fout opgetreden!", players: {} });
+        return res.status(501).render('index', { title: 'Home', isAlert: true, alertTitle: "Er is een onverwachte fout opgetreden!", players: {} });
     }
-})
+
+});
 
 // API Stuff
 // Get all users
