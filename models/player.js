@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 // setup MongoDB schema
 const playerSchema = new Schema({
     userid: { type: String, required: true},
+    name: { type: String, required: true},
     username: { type: String, required: true},
     xp: { type: Number, required: true},
     gamesplayed: { type: Number, required: true},
