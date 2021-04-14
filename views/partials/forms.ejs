@@ -1,0 +1,26 @@
+<% if(submit.success) { %>
+    <div class="winnerwinnerchickendinner">
+        <i class="fas fa-check-circle"></i>
+
+        <p>Wawaweewa, je bent succesvol ingeschreven voor het toernooi! Tot op 1 mei!</p>
+    </div>
+<% } else {%>
+    <form method="post">
+
+        <% if(submit.error.status) { %>
+        <div class="error">
+            <%= submit.error.msg %>
+        </div>
+        <% } %>
+
+        <label for="name">Jouw naam</label>
+        <input type="text" id="name" name="name">
+
+        <label for="tetrio">Jouw TETR.IO gebruikersnaam</label>
+        <input type="text" id="tetrio" name="tetrio">
+
+        <input type="submit" value="Inschrijven">
+
+        <p>Door je gegevens hier in te vullen en op inschrijven te klikken ga je ook akkoord met dat we jouw gegevens opslaan in een databank, en dat we deze voor de duur van een jaar na het tornooi bijhouden en mogen gebruiken om jou te contacteren ivm onze events. Uiteraard volgens de GDPR blablabla mag je ook je uitschrijven enzo.</p>
+    </form>
+<% } %>

@@ -10,8 +10,6 @@
                     <p class="bold"><%= formatXP(player.xp) %></p>
                     <p>Win/games</p>
                     <p class="bold"><%= player.gameswon %> / <%= player.gamesplayed %> <%= calculatePrices(player.gameswon, player.gamesplayed) %></p>
-                    <p>Last update</p>
-                    <p class="bold"><%= moment(player.updatedAt).locale('nl').format('DD MMMM YYYY - HH:mm') %></p>
                 </div>
                 
             <% }) %>

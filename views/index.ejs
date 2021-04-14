@@ -11,44 +11,70 @@
     <div class="hero">
 
         <div class="hero--text">
-            <h3>1ste grote</h3>
-            <h1>TETR.IO</h1>
-            <h2>Toernooi</h2>
+            
+            <!-- Logo -->
+            <img src="/logo.png" alt="">
 
             <!-- Buttons -->
             <div class="buttons">
                 <a href="#" class="focus">Inschrijven</a>
-                <a href="#" class="alt">Meer info</a>
             </div>
         </div>
 
     </div>
 
+    <a name="info"></a>
     <section class="info">
         <div class="content no-top-padding">
             <h2>Het allereeste TETR.IO toernooi</h2>
-            <h2>ZATERDAG 1 MEI van ... tot ...</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
+            <h2>ZATERDAG 1 MEI vanaf 19u</h2>
+            <p>Tetris, wie kent het spel niet. Het spel mag dan voor het eerst het levenslicht hebben gezien in 1984, het kan de huidige generatie nog steeds bekoren. En nu, in 2021 is de game in Twitch Vlaanderen aan een heuse revival bezig.</p>
+            <p>Daarom hebben wij besloten, voor de lol, een Tetris toernooi te organiseren. We zullen het maar benoemen: Ja, we springen op de HYEP! Maar, geef toe, wie heeft niet graag eens wat competitie in zijn leven.</p>
+            
+            <h3>Hoe werkt het toernooi?</h3>
+            <p>Het toernooi zal als volgt gaan. Op 1 mei zullen er 2 brackets gemaakt worden. 1tje voor de echte pro's, en eentje voor de meer recreatieve personen. Zo zorgen we voor een fair speelveld op alle vlakken.</p>
+            <p>Op de dag zelf zal op deze site de brackets te zien zijn en in welk kanaal jullie op tetr.io moeten joinen. Wij zullen toezien dat niemand stiekem in de verkeerde room gaat. Ben je niet ingeschreven? Dan wordt je zonder enige uitleg uit de kamer verwijdert!</p>
+            <p>Er zullen .. rondes gespeeld worden. De winnaar krijgt 5 punten, de 2de 4 punten, enzoverder tot de 5de plek. Na elke ronde zal ook de site geupdate worden met de juiste stand.</p>
+            
+            <h3>Kunnen we iets winnen?</h3>
+            <p>Op dit moment is er geen prijs te winnen. Maar wie weet komt er wel nog iets uit de bus (ja, we zijn ermee bezig). Maar voor nu is het vooral de eer die te winnen valt.</p>
+
+            <h3>Hoe kan ik meedoen?</h3>
+            <p>Scroll naar hieronder, vul je gegevens in en doe gewoon mee! Alles zal live worden gestreamd via het kanaal van <strong>Matf1x</strong> vanaf 18u.</p>
         </div>
     </section>
 
+    <a name="register"></a>
     <section class="register">
         <div class="content no-top-padding">
             <h2>Inschrijven</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni deserunt consectetur veniam odio vel ex dolores blanditiis qui? Dolorem dicta corrupti sapiente impedit doloribus aspernatur ex aliquam, provident beatae quo.</p>
+            <div class="form-holder">
+                <div>
+                    <p>Inschrijven is heel simpel. Vul in het formulier je naam in en je TETR.IO gebruikersnaam. Klik vervolgens op Inschrijven en je bent ingeschreven</p>
+                    <h3>Belangerijke informatie</h3>
+                    <ul>
+                        <li>Je moet een geregistreerd account hebben op TETR.IO. Ben je niet geregistreerd, doe dat even. Kost je maar een minuutje van je tijd. Je kan niet deelnemen met een anoniem account!</li>
+                        <li>We baseren ons op je XP & aantal gewonnen matchen tegenover de aantal gespeelde matchen om uit te maken in welke bracket je komt. We zijn nog aan het bekijken wanneer je tot welke bracket hoort (maken we later bekend).</li>
+                        <li>Kan je uiteindelijk niet meedoen op de dag zelf? Laat het dan even weten via mail naar <strong>tetris@matfix.be</strong>.</li>
+                    </ul>
+                </div>
+                <div>
+                    <%- include('./partials/forms.ejs'); %>
+                </div>
+            </div>
         </div>
     </section>
 
+    <a name="users"></a>
     <div class="content no-top-padding">
 
         <!-- The registered players -->
         <%- include('./partials/players.ejs'); %>
 
     </div>
+
+    <a name="who"></a>
+    <%- include('./partials/whois.ejs'); %>
 
     <!-- The footer -->
     <%- include('./partials/footer.ejs'); %>
