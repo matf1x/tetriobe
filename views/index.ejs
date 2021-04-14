@@ -17,7 +17,7 @@
 
             <!-- Buttons -->
             <div class="buttons">
-                <a href="#" class="focus">Inschrijven</a>
+                <a href="#register" class="focus">Inschrijven</a>
             </div>
         </div>
 
@@ -26,7 +26,7 @@
     <a name="info"></a>
     <section class="info">
         <div class="content no-top-padding">
-            <h2>Het allereeste TETR.IO toernooi</h2>
+            <h2>Het allereerste TETR.IO toernooi</h2>
             <h2>ZATERDAG 1 MEI vanaf 19u</h2>
             <p>Tetris, wie kent het spel niet. Het spel mag dan voor het eerst het levenslicht hebben gezien in 1984, het kan de huidige generatie nog steeds bekoren. En nu, in 2021 is de game in Twitch Vlaanderen aan een heuse revival bezig.</p>
             <p>Daarom hebben wij besloten, voor de lol, een Tetris toernooi te organiseren. We zullen het maar benoemen: Ja, we springen op de HYEP! Maar, geef toe, wie heeft niet graag eens wat competitie in zijn leven.</p>
@@ -66,12 +66,14 @@
     </section>
 
     <a name="users"></a>
-    <div class="content no-top-padding">
+    <section class="users">
+        <div class="content no-top-padding">
 
-        <!-- The registered players -->
-        <%- include('./partials/players.ejs'); %>
-
-    </div>
+            <!-- The registered players -->
+            <%- include('./partials/players.ejs'); %>
+    
+        </div>
+    </section>
 
     <a name="who"></a>
     <%- include('./partials/whois.ejs'); %>

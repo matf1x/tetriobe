@@ -33,81 +33,6 @@ nav {
   z-index: 100;
 }
 
-nav ul {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 2rem 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-transition: padding .15s ease-in-out;
-  transition: padding .15s ease-in-out;
-  list-style: none;
-}
-
-nav ul li {
-  padding: 0;
-  margin: 0;
-}
-
-nav ul li img {
-  height: 50px;
-  -webkit-transition: height .15s ease-in-out;
-  transition: height .15s ease-in-out;
-}
-
-nav ul li a {
-  padding: 0 1.5rem;
-  color: var(--clr-text-light);
-  text-decoration: none;
-  font-weight: 600;
-  text-transform: uppercase;
-  -webkit-transition: color .15s ease-in-out;
-  transition: color .15s ease-in-out;
-}
-
-nav ul li a:hover {
-  color: var(--clr-primary);
-}
-
-nav ul li a.no-padding {
-  padding: 0;
-}
-
-nav ul li .active {
-  color: var(--clr-primary);
-}
-
-nav ul li:first-child {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
-nav ul li:last-child a {
-  padding: 0 0 0 1.5rem;
-}
-
-.minimize ul {
-  padding: 1rem 0;
-}
-
-.minimize ul li img {
-  height: 37.5px;
-}
-
 .no-top-padding {
   padding-top: 0 !important;
 }
@@ -118,24 +43,26 @@ nav ul li:last-child a {
   background-image: url("/bg-tetris.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  height: 400px;
-  margin-top: 124px;
+  background-size: cover;
+  margin-top: 75px;
   position: relative;
 }
 
 .hero--text {
   margin: 0 auto;
   height: 100%;
+  height: 300px;
   max-width: 1200px;
   text-align: center;
 }
 
 .hero--text img {
+  width: 100%;
   padding-top: 100px;
 }
 
 .hero--text .buttons {
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 .hero--text .buttons a {
@@ -161,14 +88,21 @@ nav ul li:last-child a {
 }
 
 .content {
-  max-width: 1200px;
   margin: 2rem auto;
   padding-top: 124px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
 .info {
   background: var(--clr-light);
-  padding: 2rem 0;
+  padding: 1rem;
+}
+
+.info .content {
+  margin: 0;
+  padding: 0;
 }
 
 .info .content h2 {
@@ -195,13 +129,24 @@ nav ul li:last-child a {
   font-size: 1.35rem;
 }
 
+.users {
+  padding: 1rem;
+}
+
+.users .content {
+  margin: 0;
+  padding: 0;
+}
+
 .register {
   background: var(--clr-dark);
-  padding: 2rem 0;
+  padding: 1rem;
 }
 
 .register .content {
   color: var(--clr-text);
+  margin: 0;
+  padding: 0;
 }
 
 .register .content h2 {
@@ -217,24 +162,6 @@ nav ul li:last-child a {
   margin-bottom: 2rem;
 }
 
-.register .content .form-holder {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.register .content .form-holder div:first-child {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-}
-
 .register .content .form-holder div:first-child h3 {
   margin: 2rem 0 0 0;
   padding: 0;
@@ -246,11 +173,6 @@ nav ul li:last-child a {
 
 .register .content .form-holder div:first-child ul li {
   padding: 1rem 0;
-}
-
-.register .content .form-holder div:last-child {
-  width: 500px;
-  padding-left: 2rem;
 }
 
 .register .content .form-holder div:last-child form .error {
@@ -323,8 +245,8 @@ nav ul li:last-child a {
 
 .players .player {
   position: relative;
-  width: calc(25% - 2rem);
-  margin: 0 2rem 2rem 0;
+  width: calc(50% - 1rem);
+  margin: 0 1rem 1rem 0;
   background: var(--clr-dark);
   border-radius: 10px;
   padding: 1.5rem;
@@ -383,11 +305,8 @@ nav ul li:last-child a {
 }
 
 .whois .content {
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   margin: 0 auto;
-  background-image: url("/matfix.png");
-  background-position: top right;
-  background-repeat: no-repeat;
 }
 
 .whois .content h2 {
@@ -401,10 +320,6 @@ nav ul li:last-child a {
 .whois .content h2:last-child {
   margin: 2rem 0 0 0 !important;
   font-weight: 400 !important;
-}
-
-.whois .content p {
-  max-width: 500px;
 }
 
 .whois .content .socials ul {
@@ -494,5 +409,173 @@ footer .socials ul li a:hover {
 .winnerwinnerchickendinner p {
   margin: 3rem 0 0 0;
   font-weight: 600;
+}
+
+@media only screen and (max-width: 1024px) {
+  nav ul {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  nav ul li {
+    display: none;
+  }
+  nav ul li:first-child {
+    display: block;
+  }
+  nav ul li img {
+    width: 150px;
+  }
+  nav ul li a {
+    display: block;
+    padding: .75rem 0;
+    color: var(--clr-text-light);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    -webkit-transition: color .15s ease-in-out;
+    transition: color .15s ease-in-out;
+  }
+  nav ul li a:hover {
+    color: var(--clr-primary);
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  nav ul {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 2rem 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-transition: padding .15s ease-in-out;
+    transition: padding .15s ease-in-out;
+    list-style: none;
+  }
+  nav ul li {
+    padding: 0;
+    margin: 0;
+  }
+  nav ul li img {
+    height: 50px;
+    -webkit-transition: height .15s ease-in-out;
+    transition: height .15s ease-in-out;
+  }
+  nav ul li a {
+    padding: 0 1.5rem;
+    color: var(--clr-text-light);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    -webkit-transition: color .15s ease-in-out;
+    transition: color .15s ease-in-out;
+  }
+  nav ul li a:hover {
+    color: var(--clr-primary);
+  }
+  nav ul li a.no-padding {
+    padding: 0;
+  }
+  nav ul li .active {
+    color: var(--clr-primary);
+  }
+  nav ul li:first-child {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  nav ul li:last-child a {
+    padding: 0 0 0 1.5rem;
+  }
+  .minimize ul {
+    padding: 1rem 0;
+  }
+  .minimize ul li img {
+    height: 37.5px;
+  }
+  .hero {
+    margin-top: 124px;
+    height: 400px;
+    background-size: contain;
+  }
+  .hero--text img {
+    width: 500px;
+  }
+  .hero--text .buttons {
+    margin-top: 4rem;
+  }
+  .content {
+    width: 1200px;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-bottom: 0rem;
+  }
+  .info {
+    padding: 4rem 0;
+  }
+  .info .content {
+    margin: 0 auto;
+  }
+  .register {
+    padding: 4rem 0;
+  }
+  .register .content {
+    margin: 0 auto;
+  }
+  .register .content .form-holder {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .register .content .form-holder div:first-child {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .register .content .form-holder div:last-child {
+    width: 500px;
+    padding-left: 2rem;
+  }
+  .users {
+    padding: 4rem 0;
+  }
+  .users .content {
+    margin: 0 auto;
+  }
+  .players {
+    padding: 0;
+  }
+  .players .player {
+    width: calc(25% - 2rem);
+  }
+  .whois .content {
+    padding: 4rem 0;
+    background-image: url("/matfix.png");
+    background-position: top right;
+    background-repeat: no-repeat;
+  }
+  .whois .content p {
+    max-width: 600px;
+  }
 }
 /*# sourceMappingURL=main.css.map */

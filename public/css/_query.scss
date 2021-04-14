@@ -1,0 +1,188 @@
+@media only screen and (max-width: 1024px) {
+    nav {
+        ul {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+    
+            li {
+                display: none;
+    
+                &:first-child {
+                    display: block;
+                }
+
+                img {
+                    width: 150px;
+                }
+
+                a {
+                    display: block;
+                    padding: .75rem 0;
+                    color: var(--clr-text-light);
+                    text-decoration: none;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    transition: color .15s ease-in-out;
+    
+                    &:hover {
+                        color: var(--clr-primary);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    nav {
+        ul {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            transition: padding .15s ease-in-out;
+            list-style: none;
+    
+            li {
+                padding: 0;
+                margin: 0;
+    
+                img {
+                    height: 50px;
+                    transition: height .15s ease-in-out;
+                }
+    
+                a {
+                    padding: 0 1.5rem;
+                    color: var(--clr-text-light);
+                    text-decoration: none;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    transition: color .15s ease-in-out;
+    
+                    &:hover {
+                        color: var(--clr-primary);
+                    }
+                }
+    
+                a.no-padding {
+                    padding: 0;
+                }
+    
+                .active {
+                    color: var(--clr-primary);
+                }
+    
+                &:first-child {
+                    flex: 1;
+                }
+    
+                &:last-child {
+                    a {
+                        padding: 0 0 0 1.5rem;
+                    }
+                }
+    
+            }
+        }
+    }
+
+    .minimize {
+        ul {
+            padding: 1rem 0;
+            li {
+                img {
+                    height: 37.5px;
+                }
+            }
+        }
+    }
+
+    .hero {
+        margin-top: 124px;
+        height: 400px;
+        background-size: contain;
+
+        &--text {
+            img {
+                width: 500px;
+            }
+
+            .buttons {
+                margin-top: 4rem;
+            }
+        }
+    }
+
+    .content { 
+        width: 1200px;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        padding-bottom: 0rem;
+    }
+
+    .info {
+        padding: 4rem 0;
+        .content {
+            margin: 0 auto;
+        }
+    }
+
+    .register {
+        padding: 4rem 0;
+        .content {
+            margin: 0 auto;
+
+            .form-holder { 
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+
+                div {
+                    &:first-child {
+                        flex: 1;
+                    }
+
+                    &:last-child {
+                        width: 500px;
+                        padding-left: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .users {
+        padding: 4rem 0;
+
+        .content {
+            margin: 0 auto;
+        }
+    }
+
+    .players { 
+        padding: 0;
+        .player {
+            width: calc(25% - 2rem);
+        }
+    }
+
+    .whois {
+        .content {
+            padding: 4rem 0;
+            background-image: url('/matfix.png');
+            background-position: top right;
+            background-repeat: no-repeat;
+
+            p {
+                max-width: 600px;
+            }
+        }
+    }
+  }
