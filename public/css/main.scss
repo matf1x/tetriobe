@@ -6,6 +6,8 @@
     --clr-text: #fff;
     --clr-light: rgb(236, 236, 236);
     --clr-text-light: #ddd;
+    --clr-text-darker: #cbcbcb;
+    --clr-lightdark: #424242;
     --clr-dark: #212121;
 }
 
@@ -105,6 +107,9 @@ nav {
 .hero {
     width: 100%;
     background: var(--clr-dark);
+    background-image: url('/bg-tetris.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
     height: 400px;
     margin-top: 124px;
     position: relative;
@@ -113,35 +118,10 @@ nav {
         margin: 0 auto;
         height: 100%;
         max-width: 1200px;
-        background-image: url('/bg-hero.png');
-        background-size: auto 700px;
-        background-repeat: no-repeat;
-        background-position: center;
+        text-align: center;
 
-        h3 {
-            color: var(--clr-text);
-            margin: 0;
-            padding: 95px 0 0 0;
-            font-size: 1.25rem;
-            font-weight: 300;
-        }
-
-        h1 {
-            color: var(--clr-primary);
-            margin: 0;
-            padding: 0;
-            font-size: 4rem;
-            font-family: 'Exo 2', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            line-height: 3rem;
-        }
-
-        h2 {
-            color: var(--clr-text);
-            margin: 0;
-            padding: 0 0 0 120px;
-            font-size: 2rem;
+        img {
+            padding-top: 100px;
         }
 
         .buttons {
@@ -158,7 +138,6 @@ nav {
                 background: var(--clr-primary);
                 color: var(--clr-text);
                 border: 0;
-                margin-right: 2rem;
                 transition: all .15s ease-in-out;
                 border: 2px solid var(--clr-dark);
                 text-transform: uppercase;
@@ -166,18 +145,6 @@ nav {
 
                 &:hover {
                     border: 2px solid var(--clr-primary);
-                }
-            }
-
-            a.alt {
-                border: 2px solid var(--clr-text);
-                color: var(--clr-text);
-                transition: all .15s ease-in-out;
-                font-weight: 400;
-
-                &:hover {
-                    border: 2px solid var(--clr-primary);
-                    color: var(--clr-primary);
                 }
             }
         }
@@ -207,6 +174,17 @@ nav {
                 margin-bottom: 2rem;
             }
         }
+
+        p {
+            padding: .75rem 0 0 0;
+            margin: 0;
+        }
+
+        h3 {
+            margin: 1.5rem 0 -.75rem 0;
+            padding: 0;
+            font-size: 1.35rem;
+        }
     }
 }
 
@@ -227,6 +205,83 @@ nav {
 
             &:last-child {
                 margin-bottom: 2rem;
+            }
+        }
+
+        .form-holder {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            div {
+                &:first-child {
+                    flex: 1;
+
+                    h3 {
+                        margin: 2rem 0 0 0;
+                        padding: 0;
+                    }
+
+                    ul {
+                        margin: 0;
+                        li {
+                            padding: 1rem 0;
+                        }
+                    }
+                }
+
+                &:last-child {
+                    width: 500px;
+                    padding-left: 2rem;
+
+                    form {
+
+                        .error {
+                            color: rgb(141, 0, 0);
+                            background: rgb(255, 225, 225);
+                            padding: .5rem 1rem;
+                            border-radius: 10px;
+                            border: 1px solid rgb(141, 0, 0);
+                            margin-bottom: 1rem;
+                            font-weight: 600;
+                        }
+
+                        label {
+                            font-weight: 700;
+                            font-family: 'Exo 2', sans-serif;
+                        }
+
+                        p {
+                            font-size: .85rem;
+                            font-weight: 300;
+                            color: var(--clr-text-light);
+                            margin-top: 2rem;
+                        }
+                        input {
+                            &[type=text] {
+                                display: block;
+                                width: 100%;
+                                margin-bottom: 2rem;
+                                padding: .5rem .75rem;
+                                border-radius: 10px;
+                            }
+
+                            &[type=submit] {
+                                background: var(--clr-primary);
+                                border-radius: 10px;
+                                padding: .5rem 1.25rem;
+                                border: 0;
+                                color: var(--clr-text);
+                                font-weight: 600;
+                                cursor: pointer;
+                            }
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -302,5 +357,124 @@ nav {
                 margin-bottom: 0;
             }
         }
+    }
+}
+
+.whois {
+    background: var(--clr-primary);
+    color: var(--clr-text);
+    margin-bottom: 0;
+    padding: 0;
+
+    .content {
+        padding: 2rem 0;
+        margin: 0 auto;
+        background-image: url('/matfix.png');
+        background-position: top right;
+        background-repeat: no-repeat;
+
+        h2 {
+            font-weight: 700;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.75rem;
+            padding: 0;
+            margin: 0;
+
+            &:last-child {
+                margin: 2rem 0 0 0 !important;
+                font-weight: 400 !important;
+            }
+        }
+
+        p {
+            max-width: 500px;
+        }
+
+        .socials {
+            ul {
+                display: flex;
+                list-style: none;
+                margin: 1rem 0 0 0;
+                padding: 0;
+    
+                li {
+                    a {
+                        color: var(--clr-text);
+                        padding: 0 .75rem;
+                        transition: all .3s ease-in-out;
+                        transform: scale(1);
+                        font-size: 1.5rem;
+    
+                        &:hover {
+                            color: #000;
+                            transform: scale(1.25);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+}
+
+footer {
+    background: var(--clr-dark);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--clr-text-light);
+
+    .socials {
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 2rem 0 0 0;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+
+            li {
+                a {
+                    color: var(--clr-text-darker);
+                    padding: 0 .75rem;
+                    transition: all .3s ease-in-out;
+                    transform: scale(1);
+                    font-size: 1.35rem;
+
+                    &:hover {
+                        color: var(--clr-text);
+                        transform: scale(1.25);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.winnerwinnerchickendinner {
+    i {
+        display: block;
+        position: relative;
+        text-align: center;
+        font-size: 5rem;
+        margin-top: 2rem;
+        z-index: 100;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            top: -5px;
+            left: calc(50% - 45px);
+            border-radius: 50%;
+            background-color: var(--clr-primary);
+            z-index: -1;
+        }
+    }
+
+    p {
+        margin: 3rem 0 0 0;
+        font-weight: 600;
     }
 }

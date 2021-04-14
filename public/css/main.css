@@ -4,6 +4,8 @@
   --clr-text: #fff;
   --clr-light: rgb(236, 236, 236);
   --clr-text-light: #ddd;
+  --clr-text-darker: #cbcbcb;
+  --clr-lightdark: #424242;
   --clr-dark: #212121;
 }
 
@@ -113,6 +115,9 @@ nav ul li:last-child a {
 .hero {
   width: 100%;
   background: var(--clr-dark);
+  background-image: url("/bg-tetris.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
   height: 400px;
   margin-top: 124px;
   position: relative;
@@ -122,36 +127,11 @@ nav ul li:last-child a {
   margin: 0 auto;
   height: 100%;
   max-width: 1200px;
-  background-image: url("/bg-hero.png");
-  background-size: auto 700px;
-  background-repeat: no-repeat;
-  background-position: center;
+  text-align: center;
 }
 
-.hero--text h3 {
-  color: var(--clr-text);
-  margin: 0;
-  padding: 95px 0 0 0;
-  font-size: 1.25rem;
-  font-weight: 300;
-}
-
-.hero--text h1 {
-  color: var(--clr-primary);
-  margin: 0;
-  padding: 0;
-  font-size: 4rem;
-  font-family: 'Exo 2', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  line-height: 3rem;
-}
-
-.hero--text h2 {
-  color: var(--clr-text);
-  margin: 0;
-  padding: 0 0 0 120px;
-  font-size: 2rem;
+.hero--text img {
+  padding-top: 100px;
 }
 
 .hero--text .buttons {
@@ -169,7 +149,6 @@ nav ul li:last-child a {
   background: var(--clr-primary);
   color: var(--clr-text);
   border: 0;
-  margin-right: 2rem;
   -webkit-transition: all .15s ease-in-out;
   transition: all .15s ease-in-out;
   border: 2px solid var(--clr-dark);
@@ -179,19 +158,6 @@ nav ul li:last-child a {
 
 .hero--text .buttons a.focus:hover {
   border: 2px solid var(--clr-primary);
-}
-
-.hero--text .buttons a.alt {
-  border: 2px solid var(--clr-text);
-  color: var(--clr-text);
-  -webkit-transition: all .15s ease-in-out;
-  transition: all .15s ease-in-out;
-  font-weight: 400;
-}
-
-.hero--text .buttons a.alt:hover {
-  border: 2px solid var(--clr-primary);
-  color: var(--clr-primary);
 }
 
 .content {
@@ -218,6 +184,17 @@ nav ul li:last-child a {
   margin-bottom: 2rem;
 }
 
+.info .content p {
+  padding: .75rem 0 0 0;
+  margin: 0;
+}
+
+.info .content h3 {
+  margin: 1.5rem 0 -.75rem 0;
+  padding: 0;
+  font-size: 1.35rem;
+}
+
 .register {
   background: var(--clr-dark);
   padding: 2rem 0;
@@ -238,6 +215,86 @@ nav ul li:last-child a {
 
 .register .content h2:last-child {
   margin-bottom: 2rem;
+}
+
+.register .content .form-holder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.register .content .form-holder div:first-child {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.register .content .form-holder div:first-child h3 {
+  margin: 2rem 0 0 0;
+  padding: 0;
+}
+
+.register .content .form-holder div:first-child ul {
+  margin: 0;
+}
+
+.register .content .form-holder div:first-child ul li {
+  padding: 1rem 0;
+}
+
+.register .content .form-holder div:last-child {
+  width: 500px;
+  padding-left: 2rem;
+}
+
+.register .content .form-holder div:last-child form .error {
+  color: #8d0000;
+  background: #ffe1e1;
+  padding: .5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #8d0000;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.register .content .form-holder div:last-child form label {
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+}
+
+.register .content .form-holder div:last-child form p {
+  font-size: .85rem;
+  font-weight: 300;
+  color: var(--clr-text-light);
+  margin-top: 2rem;
+}
+
+.register .content .form-holder div:last-child form input[type=text] {
+  display: block;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: .5rem .75rem;
+  border-radius: 10px;
+}
+
+.register .content .form-holder div:last-child form input[type=submit] {
+  background: var(--clr-primary);
+  border-radius: 10px;
+  padding: .5rem 1.25rem;
+  border: 0;
+  color: var(--clr-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register .content .form-holder div:last-child form input:last-child {
+  margin-bottom: 0;
 }
 
 .players {
@@ -316,5 +373,126 @@ nav ul li:last-child a {
 
 .players .player .bold:last-child {
   margin-bottom: 0;
+}
+
+.whois {
+  background: var(--clr-primary);
+  color: var(--clr-text);
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.whois .content {
+  padding: 2rem 0;
+  margin: 0 auto;
+  background-image: url("/matfix.png");
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+
+.whois .content h2 {
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.whois .content h2:last-child {
+  margin: 2rem 0 0 0 !important;
+  font-weight: 400 !important;
+}
+
+.whois .content p {
+  max-width: 500px;
+}
+
+.whois .content .socials ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 1rem 0 0 0;
+  padding: 0;
+}
+
+.whois .content .socials ul li a {
+  color: var(--clr-text);
+  padding: 0 .75rem;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  font-size: 1.5rem;
+}
+
+.whois .content .socials ul li a:hover {
+  color: #000;
+  -webkit-transform: scale(1.25);
+          transform: scale(1.25);
+}
+
+footer {
+  background: var(--clr-dark);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--clr-text-light);
+}
+
+footer .socials ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style: none;
+  margin: 2rem 0 0 0;
+  padding: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+footer .socials ul li a {
+  color: var(--clr-text-darker);
+  padding: 0 .75rem;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  font-size: 1.35rem;
+}
+
+footer .socials ul li a:hover {
+  color: var(--clr-text);
+  -webkit-transform: scale(1.25);
+          transform: scale(1.25);
+}
+
+.winnerwinnerchickendinner i {
+  display: block;
+  position: relative;
+  text-align: center;
+  font-size: 5rem;
+  margin-top: 2rem;
+  z-index: 100;
+}
+
+.winnerwinnerchickendinner i::after {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  top: -5px;
+  left: calc(50% - 45px);
+  border-radius: 50%;
+  background-color: var(--clr-primary);
+  z-index: -1;
+}
+
+.winnerwinnerchickendinner p {
+  margin: 3rem 0 0 0;
+  font-weight: 600;
 }
 /*# sourceMappingURL=main.css.map */
