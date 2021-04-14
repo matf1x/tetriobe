@@ -6,6 +6,13 @@ const morgan = require('morgan');
 const fetch = require('node-fetch');
 const auth = require('./middleware/auth');
 const Player = require('./models/player');
+let submit = {
+    success: false,
+    error: {
+        status: false,
+        msg: ''
+    }
+}
 require('dotenv').config();
 
 // Check if global fetch is available
@@ -36,6 +43,127 @@ app.use(morgan('dev'));
 // Default route
 app.get('/', async(req, res) => {
     
+    // Reset submit
+    submit = {
+        success: false,
+        error: {
+            status: false,
+            msg: ''
+        }
+    }
+
+    // Render the page
+    await renderMainPage(req, res);
+
+});
+
+// Default route
+app.post('/', async(req, res) => {
+
+    // First, check if every input field is filled in
+    const name = req.body.name;
+    const tetrio = req.body.tetrio;
+
+    // Check if fields are filled in
+    if(name === "" || tetrio === "") {
+
+        // An empty field was found, show to the user an error message
+        submit = {
+            success: false,
+            error: {
+                status: true,
+                msg: 'Niet alle velden werden ingevuld'
+            }
+        }
+
+        // Render page
+        await renderMainPage(req, res);
+
+    } else {
+        
+        // Check if the tetrio username is know in the API
+        const url = `${process.env.LOCALPATH}/api/user/${tetrio}`;
+
+        // Get the response
+        const response = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Authorization': `Bearer ${process.env.LOCAL_JWT_KEY}`,
+            }
+        });
+
+        // Get the data
+        const body = await response.json();
+
+        // Check for errors
+        if(!body.ok || body.data.user.role === 'anon') {
+
+            // The tetrio user was not found or is not a registered user
+            submit.error = {
+                status: true,
+                msg: 'Het opgegeven Tetrio account is niet gevonden. Ben je zeker dat de gebruikersnaam juist is?'
+            }
+
+            // Render page
+            await renderMainPage(req, res);
+
+        } else {
+
+            // PCheck if the user is already in the database
+            Player.find({userid: body.data.user._id}, async(err, docs) => {
+                if(docs.length) {
+
+                    // The tetrio user was not found or is not a registered user
+                    submit.error = {
+                        status: true,
+                        msg: 'De opgegeven tetrio gebruikersnaam is reeds geregistreerd voor dit toernooi'
+                    };
+
+                    // Render page
+                    await renderMainPage(req, res);
+
+                } else {
+
+                    // All checks are ok, Create a new Player
+                    const player = new Player({
+                        userid: body.data.user._id,
+                        name: name,
+                        username: body.data.user.username,
+                        xp: body.data.user.xp,
+                        gamesplayed: body.data.user.gamesplayed,
+                        gameswon: body.data.user.gameswon,
+                        gametime: body.data.user.gametime,
+                        country: body.data.user.country
+                    });
+
+                    // Save the created player to the MongoDB
+                    player.save()
+                    .then(async (result) => {
+
+                        // Set success
+                        submit.success = true;
+
+                        // Render page
+                        await renderMainPage(req, res);
+
+                    })
+                    .catch((err) => {
+                        submit.error = {
+                            status: true,
+                            msg: 'Er is een onverwachte fout opgetreden. Probeer later opnieuw'
+                        };
+                    });
+
+                }
+            });
+
+        }
+
+    }
+
+});
+
+const renderMainPage = async(req, res) => {
     // First, call the API to get all the users
     const url = `${process.env.LOCALPATH}/api/users`;
 
@@ -53,17 +181,15 @@ app.get('/', async(req, res) => {
         const body = await response.json();
 
         if(body.ok !== undefined)
-            return res.status(503).render('index', { title: 'Home', isAlert: true, alertTitle: "Er liep iets fout bij het ophalen van de gebruikers!", players: {} });
+            return res.status(503).render('index', { title: 'Home', isAlert: true, alertTitle: "Er liep iets fout bij het ophalen van de gebruikers!", players: {}, submit });
         
         // Render the page
-        res.render('index', { title: 'Home', isAlert: false, alertTitle:'', players: body, moment });
+        res.render('index', { title: 'Home', isAlert: false, alertTitle:'', players: body, moment, submit });
 
     } catch(err) {
-        console.log(err);
-        return res.status(501).render('index', { title: 'Home', isAlert: true, alertTitle: "Er is een onverwachte fout opgetreden!", players: {} });
+        return res.status(501).render('index', { title: 'Home', isAlert: true, alertTitle: "Er is een onverwachte fout opgetreden!", players: {}, submit });
     }
-
-});
+}
 
 // API Stuff
 // Get all users
@@ -107,40 +233,10 @@ app.get('/api/user/:name', auth, async(req, res) => {
 
     // Get the data
     const data = body.data;
-    const cache = body.cache;
-
-    // First, check if the user is already created in the database
-    Player.find({userid: data.user._id}, (err, docs) => {
-        if(docs.length) 
-            return res.status(401).json({
-                ok: false,
-                error: 'The given user is already added to the database'
-            });
+    return res.status(200).json({
+        ok: true,
+        data
     });
-
-    // Create a new Player
-    const player = new Player({
-        userid: data.user._id,
-        username: data.user.username,
-        xp: data.user.xp,
-        gamesplayed: data.user.gamesplayed,
-        gameswon: data.user.gameswon,
-        gametime: data.user.gametime,
-        country: data.user.country
-    });
-
-    // Save the created streamer to the MongoDB
-    player.save()
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((err) => {
-            console.log(err);
-            return res.status(401).json({
-                ok: false,
-                error: 'Something went wrong when saving the information to the database'
-            });
-        });
 });
 
 // Default 404 page when nothing was hit
