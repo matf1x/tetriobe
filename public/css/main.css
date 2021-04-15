@@ -33,6 +33,18 @@ nav {
   z-index: 100;
 }
 
+nav .open-menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--clr-text);
+  font-size: 1.5rem;
+}
+
+.visible {
+  display: block;
+}
+
 .no-top-padding {
   padding-top: 0 !important;
 }
@@ -43,7 +55,6 @@ nav {
   background-image: url("/bg-tetris.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
   margin-top: 75px;
   position: relative;
 }
@@ -57,7 +68,6 @@ nav {
 }
 
 .hero--text img {
-  max-width: 360px;
   padding-top: 100px;
 }
 
@@ -412,6 +422,12 @@ footer .socials ul li a:hover {
 }
 
 @media only screen and (max-width: 1024px) {
+  .hero {
+    background-size: cover;
+  }
+  .hero--text img {
+    max-width: 360px;
+  }
   nav ul {
     text-align: center;
     padding: 0;
@@ -425,6 +441,7 @@ footer .socials ul li a:hover {
     display: block;
   }
   nav ul li img {
+    padding: .75rem 0;
     width: 150px;
   }
   nav ul li a {
@@ -443,6 +460,9 @@ footer .socials ul li a:hover {
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  nav .open-menu {
+    display: none;
+  }
   nav ul {
     text-align: center;
     padding: 0;
@@ -480,7 +500,6 @@ footer .socials ul li a:hover {
   .hero {
     margin-top: 124px;
     height: 400px;
-    background-size: contain;
   }
   .hero--text img {
     width: 500px;
@@ -550,6 +569,9 @@ footer .socials ul li a:hover {
 }
 
 @media only screen and (min-width: 1200px) {
+  nav .open-menu {
+    display: none;
+  }
   nav ul {
     margin: 0 auto;
     max-width: 1200px;
@@ -617,13 +639,13 @@ footer .socials ul li a:hover {
   .hero {
     margin-top: 124px;
     height: 400px;
-    background-size: contain;
   }
   .hero--text img {
-    width: 500px;
+    width: 600px;
+    height: auto;
   }
   .hero--text .buttons {
-    margin-top: 4rem;
+    margin-top: 2.5rem;
   }
   .content {
     width: 1200px;

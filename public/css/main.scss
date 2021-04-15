@@ -32,6 +32,18 @@ nav {
     margin: 0;
     border-bottom: 5px solid var(--clr-primary);
     z-index: 100;
+
+    .open-menu { 
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: var(--clr-text);
+        font-size: 1.5rem;
+     }
+}
+
+.visible {
+    display: block;
 }
 
 .no-top-padding {
@@ -44,7 +56,6 @@ nav {
     background-image: url('/bg-tetris.jpg');
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
     margin-top: 75px;
     position: relative;
 
@@ -56,7 +67,6 @@ nav {
         text-align: center;
 
         img {
-            max-width: 360px;
             padding-top: 100px;
         }
 

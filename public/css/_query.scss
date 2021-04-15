@@ -1,4 +1,13 @@
 @media only screen and (max-width: 1024px) {
+    .hero {
+        background-size: cover;
+        &--text {
+            img {
+                max-width: 360px;
+            }
+        }
+    }
+
     nav {
         ul {
             text-align: center;
@@ -14,6 +23,7 @@
                 }
 
                 img {
+                    padding: .75rem 0;
                     width: 150px;
                 }
 
@@ -37,6 +47,8 @@
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
     nav {
+        .open-menu { display: none; }
+
         ul {
             text-align: center;
             padding: 0;
@@ -85,7 +97,6 @@
     .hero {
         margin-top: 124px;
         height: 400px;
-        background-size: contain;
 
         &--text {
             img {
@@ -167,6 +178,8 @@
 
 @media only screen and (min-width: 1200px) {
     nav {
+        .open-menu { display: none; }
+
         ul {
             margin: 0 auto;
             max-width: 1200px;
@@ -237,15 +250,15 @@
     .hero {
         margin-top: 124px;
         height: 400px;
-        background-size: contain;
 
         &--text {
             img {
-                width: 500px;
+                width: 600px;
+                height: auto;
             }
 
             .buttons {
-                margin-top: 4rem;
+                margin-top: 2.5rem;
             }
         }
     }
