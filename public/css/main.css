@@ -57,7 +57,7 @@ nav {
 }
 
 .hero--text img {
-  width: 100%;
+  max-width: 360px;
   padding-top: 100px;
 }
 
@@ -439,6 +439,113 @@ footer .socials ul li a:hover {
   }
   nav ul li a:hover {
     color: var(--clr-primary);
+  }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  nav ul {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  nav ul li {
+    display: none;
+  }
+  nav ul li:first-child {
+    display: block;
+  }
+  nav ul li img {
+    width: 150px;
+  }
+  nav ul li a {
+    display: block;
+    padding: .75rem 0;
+    color: var(--clr-text-light);
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    -webkit-transition: color .15s ease-in-out;
+    transition: color .15s ease-in-out;
+  }
+  nav ul li a:hover {
+    color: var(--clr-primary);
+  }
+  .minimize ul {
+    padding: 1rem 0;
+  }
+  .minimize ul li img {
+    height: 37.5px;
+  }
+  .hero {
+    margin-top: 124px;
+    height: 400px;
+    background-size: contain;
+  }
+  .hero--text img {
+    width: 500px;
+  }
+  .hero--text .buttons {
+    margin-top: 4rem;
+  }
+  .content {
+    width: 1200px;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    padding-bottom: 0rem;
+  }
+  .info {
+    padding: 4rem 0;
+  }
+  .info .content {
+    margin: 0 auto;
+  }
+  .register {
+    padding: 4rem 0;
+  }
+  .register .content {
+    margin: 0 auto;
+  }
+  .register .content .form-holder {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .register .content .form-holder div:first-child {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .register .content .form-holder div:last-child {
+    width: 500px;
+    padding-left: 2rem;
+  }
+  .users {
+    padding: 4rem 0;
+  }
+  .users .content {
+    margin: 0 auto;
+  }
+  .players {
+    padding: 0;
+  }
+  .players .player {
+    width: calc(25% - 2rem);
+  }
+  .whois .content {
+    padding: 4rem 0;
+    background-image: url("/matfix.png");
+    background-position: top right;
+    background-repeat: no-repeat;
+  }
+  .whois .content p {
+    max-width: 600px;
   }
 }
 
