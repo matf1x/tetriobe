@@ -2,7 +2,11 @@
         &copy; 2021 Matf1x - Alle rechten voorbehouden
     </footer>
     
+    <!-- BASIC JS -->
     <script src="https://kit.fontawesome.com/fd5b42bb59.js" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- ALERT SYSTEM -->
     <script>
         var isAlert = "<%= isAlert %>"; 
         if (isAlert === true) {
@@ -13,5 +17,12 @@
         }
     </script>
 
-    <!-- Custom scripts -->
-    <script src="/js/main.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HN7B7S2GM5"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HN7B7S2GM5');
+    </script>
