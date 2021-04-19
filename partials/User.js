@@ -1,11 +1,12 @@
 // Import other packages
 const tetrio = require('tetrio-node');
+const Player = require('../models/player');
 require('dotenv').config();
 
 // Create the Tetrio API
 const tetrioAPI = new tetrio.Api(`${process.env.TETRIO_TOKEN}`, {
     notFoundAsError: true
-})
+});
 
 // Create the exports
 module.exports = {
@@ -48,6 +49,29 @@ module.exports = {
             callback(JSON.stringify(userMap));
         })
 
+    },
+
+    updateUser: async(name, Player, callback) => {
+
+        // First, get the userinfo for this user
+        try{
+            const user = await module.exports.getUserInfo(name.toLowerCase(), async(err, info) => {
+                // Check for errors
+                if(err) {
+                    return callback(false);
+                }
+
+                // Update in database
+                user = new Player({
+                    name: ''
+                })
+
+                callback(true);
+            });
+        } catch(err) {
+            return callback(false);
+        }
+        
     }
 
 }

@@ -108,13 +108,30 @@ app.post('/', async(req, res) => {
         }
     });
 
+    // Create a new player
+
+    console.log(userInfo);
+
+    const player = new Player({
+        userid: userInfo.id,
+        name: name,
+        username: userInfo.username,
+        xp: userInfo.exp,
+        gamesplayed: userInfo.gamesPlayed,
+        gameswon: userInfo.gamesWon,
+        gametime: userInfo.secondsPlayed,
+        country: userInfo.country
+    });
+
     // When all previous steps are ok, save the player to the database
-    player.save()
+    await player.save()
     .then(async (result) => {
         // Set success
         submit = json.createOutput(true, {}, false, '');
     })
     .catch((err) => {
+
+        console.log(err);
 
         // Set the submit
         submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
@@ -152,12 +169,70 @@ const renderMainPage = async(req, res) => {
         // Setup error handling
         isAlert = true;
         alertTitle = 'Er is een onverwachte fout opgetreden.';
-        console.log(err);
 
         // Render page
         await res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
     }
 }
+
+/* --------------------------------
+ * API | Refresh the players
+ * Method: GET
+ * Description: This will refresh the stats of the users that are registered
+ * -------------------------------- */
+app.get('/api/players/refresh', auth, async(req, res) => {
+
+    // Create a holder for the players
+    let players = {};
+    
+    // Get all the users and put them into a holder
+    try {
+        // Get all the players
+        await User.getAllUsers(Player, (data) => {
+            // Setup the players
+            players = JSON.parse(data);
+        });
+
+        // Loop trough the users to get the next one
+        for(const id in players) {
+
+            let apiStatus = false;
+
+            // Get the newest info for this user from the TETR.IO API
+            await User.updateUser(players[id].username, Player, (status) => {
+                // Put the status into the holder
+                apiStatus = status;
+            });
+
+            // Stop the for loop when we receive an error
+            if(!apiStatus) {
+
+                // Return the status
+                return res.status(500).json({
+                    ok: false,
+                    msg: `Er is een fout ontdekt bij het updaten van ${players[id].username}`
+                });
+
+                // Break the loop
+                break;
+            }
+
+        }
+
+        // When all ok, return status 200
+        res.status(200).json({
+            ok: true,
+            msg: ''
+        })
+
+    } catch(err) {
+        return res.status(500).json({
+            ok: false,
+            msg: err
+        });
+    }
+
+});
 
 /* --------------------------------
  * 404 pages
