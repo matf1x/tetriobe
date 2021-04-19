@@ -148,6 +148,27 @@ nav .open-menu {
   padding: 0;
 }
 
+.sponsors {
+  padding: 1rem;
+}
+
+.sponsors .content {
+  margin: 0;
+  padding: 0;
+}
+
+.sponsors .content h3 {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  color: var(--clr-primary);
+  font-family: 'Exo 2', sans-serif;
+  width: 100%;
+  text-align: center;
+}
+
 .register {
   background: var(--clr-dark);
   padding: 1rem;
@@ -551,6 +572,12 @@ footer .socials ul li a:hover {
   .users .content {
     margin: 0 auto;
   }
+  .sponsors {
+    padding: 4rem 0;
+  }
+  .sponsors .content {
+    margin: 0 auto;
+  }
   .players {
     padding: 0;
   }
@@ -689,6 +716,12 @@ footer .socials ul li a:hover {
     padding: 4rem 0;
   }
   .users .content {
+    margin: 0 auto;
+  }
+  .sponsors {
+    padding: 4rem 0;
+  }
+  .sponsors .content {
     margin: 0 auto;
   }
   .players {

@@ -1,3 +1,4 @@
+// Require other packages
 const express = require('express');
 const mongoose = require('mongoose');
 const request = require('request');
@@ -6,14 +7,12 @@ const morgan = require('morgan');
 const fetch = require('node-fetch');
 const auth = require('./middleware/auth');
 const Player = require('./models/player');
-let submit = {
-    success: false,
-    error: {
-        status: false,
-        msg: ''
-    }
-}
+const User = require('./partials/User');
+const json = require('./partials/JSON');
 require('dotenv').config();
+
+// Other variables for help
+let submit = {};
 
 // Check if global fetch is available
 if (!globalThis.fetch) {
@@ -40,206 +39,130 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-// Default route
+/* --------------------------------
+ * Main page
+ * Method: Get
+ * Description: Render the main page with all his info
+ * -------------------------------- */
 app.get('/', async(req, res) => {
     
     // Reset submit
-    submit = {
-        success: false,
-        error: {
-            status: false,
-            msg: ''
-        }
-    }
+    submit = json.createOutput(false, '', false, '');
 
     // Render the page
     await renderMainPage(req, res);
 
 });
 
-// Default route
+/* --------------------------------
+ * Main page
+ * Method: Post
+ * Description: Handles the registration form. This will check if the form is filled in,
+ * The user excists on the TETR.IO database & if the user is already registered or not
+ * -------------------------------- */
 app.post('/', async(req, res) => {
 
-    // First, check if every input field is filled in
+    // First, reset submit
+    submit = json.createOutput(false, '', false, '');
+
+    // Get the form information
     const name = req.body.name;
-    const tetrio = req.body.tetrio;
+    const tetrio = req.body.tetrio.toLowerCase();
+    let userInfo= '';
 
-    // Check if fields are filled in
-    if(name === "" || tetrio === "") {
+    // Check if the fields are filled in
+    if(!User.checkFields(name, tetrio)) {
 
-        // An empty field was found, show to the user an error message
-        submit = {
-            success: false,
-            error: {
-                status: true,
-                msg: 'Niet alle velden werden ingevuld'
-            }
-        }
+        // Set the submit
+        submit = json.createOutput(false, {}, true, 'Niet alle velden werden ingevuld');
 
         // Render page
         await renderMainPage(req, res);
 
-    } else {
-        
-        // Check if the tetrio username is know in the API
-        const url = `${process.env.LOCALPATH}/api/user/${tetrio}`;
+    }
 
-        // Get the response
-        const response = await fetch(url, {
-            method: 'get',
-            headers: {
-                'Authorization': `Bearer ${process.env.LOCAL_JWT_KEY}`,
-            }
-        });
-
-        // Get the data
-        const body = await response.json();
-
+    // Check if a user was found
+    await User.getUserInfo(tetrio, async(err, info) => {
         // Check for errors
-        if(!body.ok || body.data.user.role === 'anon') {
+        if(err) {
+            // Set the submit
+            submit = json.createOutput(false, {}, true, info);
 
-            // The tetrio user was not found or is not a registered user
-            submit.error = {
-                status: true,
-                msg: 'Het opgegeven Tetrio account is niet gevonden. Ben je zeker dat de gebruikersnaam juist is?'
-            }
+            // Render page
+            await renderMainPage(req, res);
+        }
+
+        userInfo = info;
+    })
+
+    // Check if the player is already in the database
+    Player.find({userid: userInfo.id}, async(err, docs) => {
+        if(docs.length) {
+
+            // Set the submit
+            submit = json.createOutput(false, {}, true, 'De opgegeven TETR.IO gebruiker is reeds ingeschreven');
 
             // Render page
             await renderMainPage(req, res);
 
-        } else {
-
-            // PCheck if the user is already in the database
-            Player.find({userid: body.data.user._id}, async(err, docs) => {
-                if(docs.length) {
-
-                    // The tetrio user was not found or is not a registered user
-                    submit.error = {
-                        status: true,
-                        msg: 'De opgegeven tetrio gebruikersnaam is reeds geregistreerd voor dit toernooi'
-                    };
-
-                    // Render page
-                    await renderMainPage(req, res);
-
-                } else {
-
-                    // All checks are ok, Create a new Player
-                    const player = new Player({
-                        userid: body.data.user._id,
-                        name: name,
-                        username: body.data.user.username,
-                        xp: body.data.user.xp,
-                        gamesplayed: body.data.user.gamesplayed,
-                        gameswon: body.data.user.gameswon,
-                        gametime: body.data.user.gametime,
-                        country: body.data.user.country
-                    });
-
-                    // Save the created player to the MongoDB
-                    player.save()
-                    .then(async (result) => {
-
-                        // Set success
-                        submit.success = true;
-
-                        // Render page
-                        await renderMainPage(req, res);
-
-                    })
-                    .catch((err) => {
-                        submit.error = {
-                            status: true,
-                            msg: 'Er is een onverwachte fout opgetreden. Probeer later opnieuw'
-                        };
-                    });
-
-                }
-            });
-
         }
+    });
 
-    }
+    // When all previous steps are ok, save the player to the database
+    player.save()
+    .then(async (result) => {
+        // Set success
+        submit = json.createOutput(true, {}, false, '');
+    })
+    .catch((err) => {
+
+        // Set the submit
+        submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
+    });
+
+    // Render page
+    await renderMainPage(req, res);
 
 });
 
+/* --------------------------------
+ * Render Main Page
+ * Method: async function
+ * Description: Get the current players from the API, after that, render the index page
+ * -------------------------------- */
 const renderMainPage = async(req, res) => {
-    // First, call the API to get all the users
-    const url = `${process.env.LOCALPATH}/api/users`;
 
-    // Fetch info from the API
+    // Setup helpers
+    let players = {};
+    let isAlert = false;
+    let alertTitle = '';
+
+    // Try to get the players
     try {
-
-        const response = await fetch(url, {
-            method: 'get',
-            headers: {
-                'Authorization': `Bearer ${process.env.LOCAL_JWT_KEY}`,
-            }
+        // Get all the players
+        await User.getAllUsers(Player, (data) => {
+            // Setup the players
+            players = JSON.parse(data);
         });
 
-        // Get the text and put it into a variable
-        const body = await response.json();
-
-        if(body.ok !== undefined)
-            return res.status(503).render('index', { title: 'Home', isAlert: true, alertTitle: "Er liep iets fout bij het ophalen van de gebruikers!", players: {}, submit });
-        
-        // Render the page
-        res.render('index', { title: 'Home', isAlert: false, alertTitle:'', players: body, moment, submit });
+        // Render page
+        res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
 
     } catch(err) {
-        return res.status(501).render('index', { title: 'Home', isAlert: true, alertTitle: "Er is een onverwachte fout opgetreden!", players: {}, submit });
+        // Setup error handling
+        isAlert = true;
+        alertTitle = 'Er is een onverwachte fout opgetreden.';
+        console.log(err);
+
+        // Render page
+        await res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
     }
 }
 
-// API Stuff
-// Get all users
-app.get('/api/users', auth, async(req, res) => {
-
-    // Get all the players from the mongoDB
-    Player.find({}, (err, users) => {
-        var userMap = {};
-
-        users.forEach(function(user) {
-            userMap[user._id] = user;
-        });
-
-        res.json(users);
-
-    });
-
-});
-
-// Get the room status
-app.get('/api/user/:name', auth, async(req, res) => {
-    // Get the room key
-    const name = req.params.name.toLowerCase();
-
-    // Next, call the TETR.IO api
-    const url = `${process.env.TETRIO_API}/users/${name}`;
-
-    const response = await fetch(url, {
-        method: 'get'
-    });
-
-    // Get the text and put it into a variable
-    const body = await response.json();
-
-    // Check if we found someone with the given name
-    if(!body.success)
-        return res.status(401).json({
-            ok: false,
-            error: body.error
-        });
-
-    // Get the data
-    const data = body.data;
-    return res.status(200).json({
-        ok: true,
-        data
-    });
-});
-
-// Default 404 page when nothing was hit
+/* --------------------------------
+ * 404 pages
+ * Description: This will be called when no other routes are called
+ * -------------------------------- */
 app.use((req, res) => {
     res.status(404).render('404');
 })

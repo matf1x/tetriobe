@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/matf1x/tetriobe#readme",
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
@@ -26,6 +27,7 @@
     "mongoose": "^5.12.1",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.1",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "tetrio-node": "^1.1.0"
   }
 }

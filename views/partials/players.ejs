@@ -2,18 +2,20 @@
         <h3>Aangemelde spelers</h3>
         
         <!-- Show the players -->
-        <% if (players.length > 0) { %>
-            <% players.forEach(player => { %>
-                <div class="player">
-                    <h2><%= player.username %> <img src="https://www.countryflags.io/<%= player.country %>/flat/64.png" alt=""></h2>
-                    <p>XP</p>
-                    <p class="bold"><%= formatXP(player.xp) %></p>
-                    <p>Win/games</p>
-                    <p class="bold"><%= player.gameswon %> / <%= player.gamesplayed %> <%= calculatePrices(player.gameswon, player.gamesplayed) %></p>
-                </div>
-                
-            <% }) %>
-        <% } else { %>
+        <% for(const id in players) { %>
+            
+            <div class="player">
+                <h2><%= players[id].username %> <img src="https://www.countryflags.io/<%= players[id].country %>/flat/64.png" alt=""></h2>
+                <p>XP</p>
+                <p class="bold"><%= formatXP(players[id].xp) %></p>
+                <p>Win/games</p>
+                <p class="bold"><%= players[id].gameswon %> / <%= players[id].gamesplayed %> <%= calculatePrices(players[id].gameswon, players[id].gamesplayed) %></p>
+            </div>
+
+        <% } %>
+        <% 
+        const count = Object.keys(players).length;
+        if(count === 0) { %>
             <p>Er zijn nog geen spelers toegevoegd tot de lijst</p>
         <% } %>
     </div>
