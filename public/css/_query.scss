@@ -155,14 +155,6 @@
         }
     }
 
-    .sponsors {
-        padding: 4rem 0;
-
-        .content {
-            margin: 0 auto;
-        }
-    }
-
     .players { 
         padding: 0;
         .player {
@@ -322,6 +314,24 @@
 
         .content {
             margin: 0 auto;
+
+            ul {
+                list-style: none;
+                display: flex;
+
+                li {
+                    width: 250px;
+                    margin-right: 2rem;
+                    
+                    a {
+                        padding-right: 2rem;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
         }
     }
 
