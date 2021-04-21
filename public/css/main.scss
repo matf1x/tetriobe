@@ -163,7 +163,10 @@ nav {
             color: var(--clr-primary);
             font-family: 'Exo 2', sans-serif;
             width: 100%;
-            text-align: center;
+        }
+        
+        ul {
+            list-style: none;
         }
     }
 }
