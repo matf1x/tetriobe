@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+require('dotenv').config();
 
 // setup MongoDB schema
 const playerSchema = new Schema({
@@ -10,11 +11,14 @@ const playerSchema = new Schema({
     gamesplayed: { type: Number, required: true},
     gameswon: { type: Number, required: true},
     gametime: { type: String, required: true},
-    country: { type: String, required: true}
+    country: { type: String, required: true},
+    tetraleague: { type: Object, required: true },
+    sprint: { type: Object, required: true },
+    joinDate: { type: String, required: true }
 }, { timestamps: true });
 
 // Setup model
-const Player = mongoose.model('users', playerSchema);
+const Player = mongoose.model(process.env.MASTER_TABLE, playerSchema);
 
 // Export the model
 module.exports = Player;

@@ -51,22 +51,42 @@ module.exports = {
 
     },
 
-    updateUser: async(name, Player, callback) => {
+    updateUser: async(id, name, Player, callback) => {
 
         // First, get the userinfo for this user
         try{
-            const user = await module.exports.getUserInfo(name.toLowerCase(), async(err, info) => {
+            const user = await module.exports.getUserInfo(name.toLowerCase(), async(err, userInfo) => {
                 // Check for errors
                 if(err) {
                     return callback(false);
                 }
 
-                // Update in database
-                user = new Player({
-                    name: ''
-                })
+                // Create a player model
+                const player = {
+                    userid: userInfo.id,
+                    name: name,
+                    username: userInfo.username,
+                    xp: userInfo.exp,
+                    gamesplayed: userInfo.gamesPlayed,
+                    gameswon: userInfo.gamesWon,
+                    gametime: userInfo.secondsPlayed,
+                    country: userInfo.country,
+                    tetraleague: userInfo.tetraLeague,
+                    sprint: userInfo.records.sprint,
+                    joinDate: userInfo.joinDate
+                };
 
+                // Update the user
+                Player.updateOne({_id:id}, player)
+                    .then(doc => {
+                        // Check if a doc is returned, if not, send error
+                        if(!doc) { console.log('Error with doc'); return callback(false); }
+                    })
+                    .catch(err => { console.log(err); return callback(false) });
+
+                // Return callback true to let the script know that the update was succesfull
                 callback(true);
+                
             });
         } catch(err) {
             return callback(false);

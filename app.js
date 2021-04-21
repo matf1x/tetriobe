@@ -95,6 +95,9 @@ app.post('/', async(req, res) => {
         userInfo = info;
     })
 
+    // Create a new player
+    console.log(userInfo);
+
     // Check if the player is already in the database
     Player.find({userid: userInfo.id}, async(err, docs) => {
         if(docs.length) {
@@ -108,10 +111,7 @@ app.post('/', async(req, res) => {
         }
     });
 
-    // Create a new player
-
-    console.log(userInfo);
-
+    // Create a player model
     const player = new Player({
         userid: userInfo.id,
         name: name,
@@ -120,7 +120,10 @@ app.post('/', async(req, res) => {
         gamesplayed: userInfo.gamesPlayed,
         gameswon: userInfo.gamesWon,
         gametime: userInfo.secondsPlayed,
-        country: userInfo.country
+        country: userInfo.country,
+        tetraleague: userInfo.tetraLeague,
+        sprint: userInfo.records.sprint,
+        joinDate: userInfo.joinDate
     });
 
     // When all previous steps are ok, save the player to the database
@@ -199,10 +202,12 @@ app.get('/api/players/refresh', auth, async(req, res) => {
             let apiStatus = false;
 
             // Get the newest info for this user from the TETR.IO API
-            await User.updateUser(players[id].username, Player, (status) => {
+            await User.updateUser(players[id]._id, players[id].username, Player, (status) => {
                 // Put the status into the holder
                 apiStatus = status;
             });
+
+            console.log(apiStatus);
 
             // Stop the for loop when we receive an error
             if(!apiStatus) {
