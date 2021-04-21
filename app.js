@@ -77,65 +77,51 @@ app.post('/', async(req, res) => {
         submit = json.createOutput(false, {}, true, 'Niet alle velden werden ingevuld');
 
         // Render page
-        await renderMainPage(req, res);
+        return renderMainPage(req, res);
 
     }
 
-    // Check if a user was found
-    await User.getUserInfo(tetrio, async(err, info) => {
-        // Check for errors
-        if(err) {
-            // Set the submit
-            submit = json.createOutput(false, {}, true, info);
+    // Get the User information from the API
+    User.getUserInfo(tetrio)
+        .then(async(userInfo) => {
+            // Then, we search if the player already is known in the database
+            docs = await Player.find({userid: userInfo.id});
+
+            // Check if there are any docs known
+            if(docs.length) { 
+                submit = json.createOutput(false, {}, true, 'De opgegeven TETRIO gebruiker is reeds gevonden in de deelnemerslijst.'); 
+            } else {
+                // Create a player model
+                const player = new Player({
+                    userid: userInfo.id,
+                    name: name,
+                    username: userInfo.username,
+                    xp: userInfo.exp,
+                    gamesplayed: userInfo.gamesPlayed,
+                    gameswon: userInfo.gamesWon,
+                    gametime: userInfo.secondsPlayed,
+                    country: userInfo.country,
+                    tetraleague: userInfo.tetraLeague,
+                    sprint: userInfo.records.sprint,
+                    joinDate: userInfo.joinDate
+                });
+
+                // Now, save the player to the database
+                await player.save()
+                .then(async (result) => {
+                    // Set success
+                    submit = json.createOutput(true, {}, false, '');
+                })
+                .catch((err) => {
+                    // Set the submit
+                    submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
+                });
+            }
 
             // Render page
-            await renderMainPage(req, res);
-        }
-
-        userInfo = info;
-    });
-
-    // Check if the player is already in the database
-    Player.find({userid: userInfo.id}, async(err, docs) => {
-        if(docs.length) {
-
-            // Set the submit
-            submit = json.createOutput(false, {}, true, 'De opgegeven TETR.IO gebruiker is reeds ingeschreven');
-
-            // Render page
-            await renderMainPage(req, res);
-
-        }
-    });
-
-    // Create a player model
-    const player = new Player({
-        userid: userInfo.id,
-        name: name,
-        username: userInfo.username,
-        xp: userInfo.exp,
-        gamesplayed: userInfo.gamesPlayed,
-        gameswon: userInfo.gamesWon,
-        gametime: userInfo.secondsPlayed,
-        country: userInfo.country,
-        tetraleague: userInfo.tetraLeague,
-        sprint: userInfo.records.sprint,
-        joinDate: userInfo.joinDate
-    });
-
-    // When all previous steps are ok, save the player to the database
-    await player.save()
-    .then(async (result) => {
-        // Set success
-        submit = json.createOutput(true, {}, false, '');
-    })
-    .catch((err) => {
-        // Set the submit
-        submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
-    });
-
-    // Render page
-    await renderMainPage(req, res);
+            renderMainPage(req, res);
+        })
+        .catch((err) => { submit = json.createOutput(false, {}, true, 'De opgegeven TETRIO gebruiker werd niet gevonden.'); renderMainPage(req, res); });
 
 });
 
@@ -165,7 +151,6 @@ const renderMainPage = async(req, res) => {
                 // A error returned from the promise, show a error page
                 res.status(500).render('500', { title: '500', isAlert, alertTitle });
             });
-
     } catch(err) {
         // An error occured, render the error page
         res.status(500).render('500', { title: '500', isAlert, alertTitle });
@@ -185,45 +170,39 @@ app.get('/api/players/refresh', auth, async(req, res) => {
     
     // Get all the users and put them into a holder
     try {
-        // Get all the players
-        await User.getAllUsers(Player, (data) => {
-            // Setup the players
-            players = JSON.parse(data);
-        });
 
-        // Loop trough the users to get the next one
-        for(const id in players) {
+        // Before we start, we will get all the users
+        User.getAllUsers(Player)
+            .then((data) => {
 
-            let apiStatus = false;
+                // Parse the data into a understandable format
+                players = JSON.parse(data);
 
-            // Get the newest info for this user from the TETR.IO API
-            await User.updateUser(players[id]._id, players[id].username, Player, (status) => {
-                // Put the status into the holder
-                apiStatus = status;
-            });
+                // Loop in the player array
+                for(const id in players) {
 
-            // Stop the for loop when we receive an error
-            if(!apiStatus) {
+                    // Update the current user
+                    User.updateUser(players[id]._id, players[id].username, Player)
+                    .then(() => {
+                        console.log('Updated ' + players[id].username + ' successfully');
+                    })
+                    .catch((err) => {
+                        console.log('Error with updating ' + players[id].username + '');
+                    });
 
-                // Return the status
-                return res.status(500).json({
-                    ok: false,
-                    msg: `Er is een fout ontdekt bij het updaten van ${players[id].username}`
+                }
+
+                // When all users are updated, return status 200
+                res.status(200).json({
+                    ok: true,
+                    msg: 'All users are updated'
                 });
 
-                // Break the loop
-                break;
-            }
-
-        }
-
-        // When all ok, return status 200
-        res.status(200).json({
-            ok: true,
-            msg: ''
-        })
+            })
+            .catch((err) => { console.log(err); res.status(500).json({ok: false, msg: err }); })
 
     } catch(err) {
+        console.log(err);
         return res.status(500).json({
             ok: false,
             msg: err

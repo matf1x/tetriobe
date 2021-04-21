@@ -20,21 +20,27 @@ module.exports = {
     },
 
     // Get the user information
-    getUserInfo: async(id, callback) => {
+    getUserInfo: (user) => {
 
-        // Get the users information
-        await tetrioAPI.getUser({ user: id }).then((user) => {
-            callback(false, user);
-        })
-        .catch((err) => {
-            callback(true, 'De opgegeven TETR.IO gebruiker werd niet gevonden');
+        // Create a new Promise
+        return new Promise((resolve, reject) => {
+
+            // Get the info from the TETRIO API
+            tetrioAPI.getUser({ user })
+                .then((info) => { resolve(info) })
+                .catch((err) => { console.log(err); reject(err) });
+
         });
 
     },
 
-    // Get all the users from the database
+    /* --------------
+     * get All Users
+     * Retrieve all players from the MongoDB database
+     * -------------- */
     getAllUsers: (Player) => {
 
+        // Create a new Promise
         return new Promise((resolve, reject) => {
             // Search all players
             Player.find({}, (err, users) => {
@@ -55,46 +61,48 @@ module.exports = {
 
     },
 
-    updateUser: async(id, name, Player, callback) => {
+    /* --------------
+     * Update User
+     * This will update the user in the database. First, we get the new information from API
+     * Then we do an update in the database with the new info
+     * -------------- */
+    updateUser: (id, name, Player) => {
 
-        // First, get the userinfo for this user
-        try{
-            const user = await module.exports.getUserInfo(name.toLowerCase(), async(err, userInfo) => {
-                // Check for errors
-                if(err) {
-                    return callback(false);
-                }
+        // Create a new Promise
+        return new Promise((resolve, reject) => {
 
-                // Create a player model
-                const player = {
-                    userid: userInfo.id,
-                    name: name,
-                    username: userInfo.username,
-                    xp: userInfo.exp,
-                    gamesplayed: userInfo.gamesPlayed,
-                    gameswon: userInfo.gamesWon,
-                    gametime: userInfo.secondsPlayed,
-                    country: userInfo.country,
-                    tetraleague: userInfo.tetraLeague,
-                    sprint: userInfo.records.sprint,
-                    joinDate: userInfo.joinDate
-                };
+            // Get the correct user information
+            module.exports.getUserInfo(name.toLowerCase())
+                .then((userInfo) => {
+                    // Create a player model
+                    const player = {
+                        userid: userInfo.id,
+                        name: name,
+                        username: userInfo.username,
+                        xp: userInfo.exp,
+                        gamesplayed: userInfo.gamesPlayed,
+                        gameswon: userInfo.gamesWon,
+                        gametime: userInfo.secondsPlayed,
+                        country: userInfo.country,
+                        tetraleague: userInfo.tetraLeague,
+                        sprint: userInfo.records.sprint,
+                        joinDate: userInfo.joinDate
+                    };
 
-                // Update the user
-                Player.updateOne({_id:id}, player)
+                    // Update the player in the database
+                    Player.updateOne({_id:id}, player)
                     .then(doc => {
                         // Check if a doc is returned, if not, send error
-                        if(!doc) { return callback(false); }
-                    })
-                    .catch(err => { return callback(false) });
+                        if(!doc) { reject() }
 
-                // Return callback true to let the script know that the update was succesfull
-                callback(true);
-                
-            });
-        } catch(err) {
-            return callback(false);
-        }
+                        // All went smooth, resolve the Promise
+                        resolve();
+                    })
+                    .catch(err => { reject(err); });
+                })
+                .catch((err) => { reject(err); })
+
+        });
         
     }
 
