@@ -93,10 +93,7 @@ app.post('/', async(req, res) => {
         }
 
         userInfo = info;
-    })
-
-    // Create a new player
-    console.log(userInfo);
+    });
 
     // Check if the player is already in the database
     Player.find({userid: userInfo.id}, async(err, docs) => {
@@ -133,9 +130,6 @@ app.post('/', async(req, res) => {
         submit = json.createOutput(true, {}, false, '');
     })
     .catch((err) => {
-
-        console.log(err);
-
         // Set the submit
         submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
     });
@@ -160,22 +154,23 @@ const renderMainPage = async(req, res) => {
     // Try to get the players
     try {
         // Get all the players
-        await User.getAllUsers(Player, (data) => {
-            // Setup the players
-            players = JSON.parse(data);
-        });
+        User.getAllUsers(Player)
+            .then((data) => {
+                // Get the players & parse them
+                players = JSON.parse(data);
 
-        // Render page
-        res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
+                // Render the page
+                res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
+            }).catch(err => {
+                // A error returned from the promise, show a error page
+                res.status(500).render('500', { title: '500', isAlert, alertTitle });
+            });
 
     } catch(err) {
-        // Setup error handling
-        isAlert = true;
-        alertTitle = 'Er is een onverwachte fout opgetreden.';
-
-        // Render page
-        await res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
+        // An error occured, render the error page
+        res.status(500).render('500', { title: '500', isAlert, alertTitle });
     }
+
 }
 
 /* --------------------------------
@@ -206,8 +201,6 @@ app.get('/api/players/refresh', auth, async(req, res) => {
                 // Put the status into the holder
                 apiStatus = status;
             });
-
-            console.log(apiStatus);
 
             // Stop the for loop when we receive an error
             if(!apiStatus) {
@@ -244,5 +237,5 @@ app.get('/api/players/refresh', auth, async(req, res) => {
  * Description: This will be called when no other routes are called
  * -------------------------------- */
 app.use((req, res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', { title: '500' });
 })

@@ -33,21 +33,25 @@ module.exports = {
     },
 
     // Get all the users from the database
-    getAllUsers: async(Player, callback) => {
+    getAllUsers: (Player) => {
 
-        // Get all the players
-        await Player.find({}, (err, users) => {
-            // Create a empty usermap
-            let userMap = {};
-
-            // Loop trough the users
-            users.forEach(function(user) {
-                userMap[user._id] = user;
-            });
-
-            // Callback the usermap
-            callback(JSON.stringify(userMap));
-        })
+        return new Promise((resolve, reject) => {
+            // Search all players
+            Player.find({}, (err, users) => {
+                // Create a empty usermap
+                let userMap = {};
+    
+                // Loop trough the users
+                users.forEach(function(user) {
+                    userMap[user._id] = user;
+                });
+    
+                // Callback the usermap
+                resolve(JSON.stringify(userMap));
+            }).catch((err) => {
+                reject(err);
+            })
+        });
 
     },
 
@@ -80,9 +84,9 @@ module.exports = {
                 Player.updateOne({_id:id}, player)
                     .then(doc => {
                         // Check if a doc is returned, if not, send error
-                        if(!doc) { console.log('Error with doc'); return callback(false); }
+                        if(!doc) { return callback(false); }
                     })
-                    .catch(err => { console.log(err); return callback(false) });
+                    .catch(err => { return callback(false) });
 
                 // Return callback true to let the script know that the update was succesfull
                 callback(true);
