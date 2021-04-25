@@ -1,0 +1,32 @@
+<%- include('./functions.ejs') %>
+<% currentPage = 'home' %>
+<!DOCTYPE html>
+<html lang="nl">
+<%- include('./partials/head.ejs') %>
+<body>
+
+    <!-- MAIN DIV NEEDS TO BE 810 WIDTH -->
+    <section class="scoreboard">
+
+        <div class="user header">
+            <div class="user__place">#</div>
+            <div class="user__name">Gebruikersnaam</div>
+            <div class="user__linesGive">Verz.</div>
+            <div class="user__linesReceived">Ont.</div>
+            <div class="user__points">Punten</div>
+        </div>
+
+        <% for(const id in players) { %>
+        <div class="user top">
+            <div class="user__place"><%= id %></div>
+            <div class="user__name"><%= players[id].username %></div>
+            <div class="user__linesGive"><%= players[id].lines.given %></div>
+            <div class="user__linesReceived"><%= players[id].lines.received %></div>
+            <div class="user__points"><%= players[id].points %></div>
+        </div>
+        <% } %>
+
+    </section>
+
+</body>
+</html>

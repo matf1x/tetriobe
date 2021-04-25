@@ -1,0 +1,62 @@
+.scoreboard {
+    display: flow-root;
+    padding: 0;
+    margin: 0;
+    width: 810px;
+    overflow: hidden;
+    background: var(--clr-dark);
+    color: var(--clr-text);
+    font-family: 'Exo 2', sans-serif;
+
+    .user {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        border-bottom: 4px solid var(--clr-primary);
+        font-size: 1.3rem;
+
+        div {
+            padding: .75rem 1rem;
+        }
+
+        &__place {
+            width: 50px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        &__name {
+            flex: 1;
+            width: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        &__linesGive {
+            width: 75px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        &__linesReceived {
+            width: 75px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        &__points {
+            width: 100px;
+            font-weight: 600;
+            text-align: center;
+        }
+    }
+
+    .top {
+        background: var(--clr-primary-dark);
+        border-bottom: 4px solid var(--clr-dark);
+    }
+
+    .header {
+        font-size: 1rem;
+    }
+}

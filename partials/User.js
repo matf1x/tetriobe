@@ -38,7 +38,7 @@ module.exports = {
      * get All Users
      * Retrieve all players from the MongoDB database
      * -------------- */
-    getAllUsers: (Player) => {
+    getAllUsers: () => {
 
         // Create a new Promise
         return new Promise((resolve, reject) => {
@@ -62,11 +62,42 @@ module.exports = {
     },
 
     /* --------------
+     * get players from specific bracket
+     * Retrieve all players from a specific bracket from the MongoDB database
+     * -------------- */
+    getBracketPlayers: (bracket) => {
+
+        // Create a new Promise
+        return new Promise((resolve, reject) => {
+            // Search all players
+            Player.find({bracket:bracket}).sort('-points').exec((err, users) => {
+
+                // Check for errors
+                if(err) reject(err);
+
+                // Create a empty usermap
+                let userMap = {};
+                let counter = 1;
+    
+                // Loop trough the users
+                users.forEach(function(user) {
+                    userMap[counter] = user;
+                    counter++;
+                });
+    
+                // Callback the usermap
+                resolve(JSON.stringify(userMap));
+            })
+        });
+
+    },
+
+    /* --------------
      * Update User
      * This will update the user in the database. First, we get the new information from API
      * Then we do an update in the database with the new info
      * -------------- */
-    updateUser: (id, name, Player) => {
+    updateUser: (id, name) => {
 
         // Create a new Promise
         return new Promise((resolve, reject) => {
@@ -104,6 +135,70 @@ module.exports = {
 
         });
         
+    },
+
+    /* --------------
+     * Add tournament information
+     * This will add the tournament information for the user
+     * -------------- */
+    updateTournamentUser: (name, bracket) => {
+
+        return new Promise((resolve, reject) => {
+
+            // Create a new player
+            const player = {
+                bracket: bracket,
+                points: 0,
+                lines: {
+                    given: 0,
+                    received: 0
+                }
+            }
+
+            // Add those fields to the given user
+            Player.updateOne({username:name}, {$set: player}, { new: true, strict: false })
+                .then((doc) => {
+                    // Check if we received feedback. If not, send a reject, otherwise, send a resolve
+                    if(!doc) reject();
+                    resolve();
+                })
+                .catch((err) => reject(err));
+
+        });
+
+    },
+     
+    /* --------------
+     * Update User after game
+     * Update the user after a game is done.
+     * This will be called after we post the results & the Game Converter has run
+     * -------------- */
+    updateUserAfterGame: (user) => {
+
+        // Create a new Promise
+        return new Promise((resolve, reject) => {
+
+            // TEMP
+            console.log(`Update ${user.name} after the game`);
+
+            // Create a const with the correct fields
+            const player = {
+                points: user.points,
+                "lines.given": Number(user.lines.sent),
+                "lines.received": Number(user.lines.get)
+            }
+
+            // Update the user in the database
+            Player.updateOne({username:user.name}, {$inc: player}, { new: true, strict: false })
+                .then((doc) => {
+                    // Check if we received feedback. If not, send a reject, otherwise, send a resolve
+                    if(!doc) reject();
+                    resolve();
+                })
+                .catch((err) => reject(err));
+
+        })
+
     }
 
 }

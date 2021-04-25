@@ -1,17 +1,25 @@
 // Require other packages
 const express = require('express');
 const mongoose = require('mongoose');
-const request = require('request');
 const moment = require('moment');
 const morgan = require('morgan');
 const fetch = require('node-fetch');
-const auth = require('./middleware/auth');
-const Player = require('./models/player');
+
+// Require custom packages
 const User = require('./partials/User');
+const Game = require('./partials/Game');
 const json = require('./partials/JSON');
+
+// Require the middleware packages
+const auth = require('./middleware/auth');
+
+// Load the models we need
+const Player = require('./models/player');
+
+// Require other stuff
 require('dotenv').config();
 
-// Other variables for help
+// Create variables that we need for output
 let submit = {};
 
 // Check if global fetch is available
@@ -37,6 +45,7 @@ mongoose.connect(mongodbURI, {useNewUrlParser: true, useUnifiedTopology: true })
 // Middleware
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(morgan('dev'));
 
 /* --------------------------------
@@ -114,6 +123,7 @@ app.post('/', async(req, res) => {
                 })
                 .catch((err) => {
                     // Set the submit
+                    console.log(err);
                     submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
                 });
             }
@@ -123,6 +133,31 @@ app.post('/', async(req, res) => {
         })
         .catch((err) => { submit = json.createOutput(false, {}, true, 'De opgegeven TETRIO gebruiker werd niet gevonden.'); renderMainPage(req, res); });
 
+});
+
+/* --------------------------------
+ * Brackets
+ * Method: Get
+ * Description: This will show a specific bracket and the players + stats
+ * Params: @id (string)
+ * -------------------------------- */
+app.get('/bracket/:id', async(req, res) => {
+
+    // Setup helpers
+    let isAlert = false;
+    let alertTitle = '';
+    const bracket = req.params['id']
+
+    // Get the players from the specific bracket
+    User.getBracketPlayers(bracket)
+        .then((data) => {
+            // Parse the players
+            const players = JSON.parse(data);
+
+            // Render the page
+            res.render('bracket', { title: `Bracket ${bracket}`, players });
+        })
+        .catch((err) => { console.log(err); res.status(500).render('500', { title: '500', isAlert, alertTitle }); })
 });
 
 /* --------------------------------
@@ -140,20 +175,20 @@ const renderMainPage = async(req, res) => {
     // Try to get the players
     try {
         // Get all the players
-        User.getAllUsers(Player)
+        User.getAllUsers()
             .then((data) => {
                 // Get the players & parse them
                 players = JSON.parse(data);
 
                 // Render the page
-                res.render('index', { title: 'Home', isAlert, alertTitle, players, moment, submit });
+                res.render('index', { title: 'Home', players, moment, submit });
             }).catch(err => {
                 // A error returned from the promise, show a error page
-                res.status(500).render('500', { title: '500', isAlert, alertTitle });
+                res.status(500).render('500', { title: '500' });
             });
     } catch(err) {
         // An error occured, render the error page
-        res.status(500).render('500', { title: '500', isAlert, alertTitle });
+        res.status(500).render('500', { title: '500' });
     }
 
 }
@@ -172,7 +207,7 @@ app.get('/api/players/refresh', auth, async(req, res) => {
     try {
 
         // Before we start, we will get all the users
-        User.getAllUsers(Player)
+        User.getAllUsers()
             .then((data) => {
 
                 // Parse the data into a understandable format
@@ -182,7 +217,7 @@ app.get('/api/players/refresh', auth, async(req, res) => {
                 for(const id in players) {
 
                     // Update the current user
-                    User.updateUser(players[id]._id, players[id].username, Player)
+                    User.updateUser(players[id]._id, players[id].username)
                     .then(() => {
                         console.log('Updated ' + players[id].username + ' successfully');
                     })
@@ -208,6 +243,65 @@ app.get('/api/players/refresh', auth, async(req, res) => {
             msg: err
         });
     }
+
+});
+
+/* --------------------------------
+ * API | Bracket info
+ * Method: POST
+ * Description: Set the correct bracket & add the correct lines for the scoreboard
+ * Params: @name (String), @bracket (Number)
+ * -------------------------------- */
+app.post('/api/players/bracket', auth, async(req, res) => {
+
+    // Get the correct variables
+    const name = req.body.name;
+    const bracket = req.body.bracket;
+
+    // Try to execute
+    try {
+        // Update the bracket for the specific user
+        User.updateTournamentUser(name, bracket)
+            .then(() => { res.status(200).json({ok: true }); })
+            .catch((err) => { res.status(500).json({ok: false, msg: err }); })
+    } catch(err) { res.status(500).json({ok: false, msg: err }); }
+
+})
+
+/* --------------------------------
+ * API | Enter the results
+ * Method: POST
+ * Description: This will process the results of a game
+ * Params: @output (String)
+ * -------------------------------- */
+app.post('/api/games/add', auth, async(req, res) => {
+
+    // Convert the output
+    try {
+        Game.convertOutput(req.body.output)
+            .then((plrs) => {
+
+                // Loop trough the players
+                for(const id in plrs) {
+
+                    // Update the user in the database
+                    User.updateUserAfterGame(plrs[id])
+                        .catch((err) => {
+                            console.log(`Speler ${plrs[id].name} kon niet worden geupdate`);
+                        });
+
+                }
+
+                // Return status 200 to let the user know the process was successfull
+                res.status(200).json({ok: true, plrs });
+
+            })
+            .catch((err) => { return res.status(500).json({ok: false, msg: 'Onfortuinlijk' }); });
+
+    } catch(err) {
+        res.status(500).json({ok: false, msg: err });
+    }
+    
 
 });
 

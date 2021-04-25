@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Exo+2:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 :root {
   --clr-primary: #fd7014;
+  --clr-primary-dark: #c95406;
   --clr-text: #fff;
   --clr-light: rgb(236, 236, 236);
   --clr-text-light: #ddd;
@@ -443,6 +444,73 @@ footer .socials ul li a:hover {
 .winnerwinnerchickendinner p {
   margin: 3rem 0 0 0;
   font-weight: 600;
+}
+
+.scoreboard {
+  display: flow-root;
+  padding: 0;
+  margin: 0;
+  width: 810px;
+  overflow: hidden;
+  background: var(--clr-dark);
+  color: var(--clr-text);
+  font-family: 'Exo 2', sans-serif;
+}
+
+.scoreboard .user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  border-bottom: 4px solid var(--clr-primary);
+  font-size: 1.3rem;
+}
+
+.scoreboard .user div {
+  padding: .75rem 1rem;
+}
+
+.scoreboard .user__place {
+  width: 50px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.scoreboard .user__name {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.scoreboard .user__linesGive {
+  width: 75px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.scoreboard .user__linesReceived {
+  width: 75px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.scoreboard .user__points {
+  width: 100px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.scoreboard .top {
+  background: var(--clr-primary-dark);
+  border-bottom: 4px solid var(--clr-dark);
+}
+
+.scoreboard .header {
+  font-size: 1rem;
 }
 
 @media only screen and (max-width: 1024px) {

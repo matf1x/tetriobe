@@ -3,6 +3,7 @@
 
 :root {
     --clr-primary: #fd7014;
+    --clr-primary-dark: #c95406;
     --clr-text: #fff;
     --clr-light: rgb(236, 236, 236);
     --clr-text-light: #ddd;
@@ -450,4 +451,5 @@ footer {
     }
 }
 
+@import 'scoreboard';
 @import 'query';

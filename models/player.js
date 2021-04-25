@@ -12,8 +12,8 @@ const playerSchema = new Schema({
     gameswon: { type: Number, required: true},
     gametime: { type: String, required: true},
     country: { type: String, required: true},
-    tetraleague: { type: Object, required: true },
-    sprint: { type: Object, required: true },
+    tetraleague: { type: Object },
+    sprint: { type: Object },
     joinDate: { type: String, required: true }
 }, { timestamps: true });
 
