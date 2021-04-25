@@ -5,7 +5,7 @@
         <% for(const id in players) { %>
             
             <div class="player">
-                <h2><%= players[id].username %> <img src="https://www.countryflags.io/<%= players[id].country %>/flat/64.png" alt=""></h2>
+                <h2><%= players[id].username %> <img src="/flags/<%= players[id].country %>.png" alt=""></h2>
                 <p>XP</p>
                 <p class="bold"><%= formatXP(players[id].xp) %></p>
                 <p>Win/games</p>
