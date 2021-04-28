@@ -306,6 +306,26 @@ app.post('/api/games/add', auth, async(req, res) => {
 });
 
 /* --------------------------------
+ * API | Get the players
+ * Method: GET
+ * Description: This will return all the players
+ * output: @players (String)
+ * -------------------------------- */
+app.get('/api/players/list', auth, async(req, res) => {
+   
+    // Get all the players
+    User.getAllUsers()
+        .then((data) => {
+            const players = JSON.parse(data);
+            res.json({players});
+        })
+        .catch((err) => {
+            res.status(500).json({ok: false, msg: err });
+        })
+
+});
+
+/* --------------------------------
  * 404 pages
  * Description: This will be called when no other routes are called
  * -------------------------------- */
