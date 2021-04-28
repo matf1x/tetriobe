@@ -312,18 +312,64 @@ app.post('/api/games/add', auth, async(req, res) => {
  * output: @players (String)
  * -------------------------------- */
 app.get('/api/players/list', auth, async(req, res) => {
-   
+
     // Get all the players
     User.getAllUsers()
         .then((data) => {
             const players = JSON.parse(data);
-            res.json({players});
+            res.json(players);
         })
         .catch((err) => {
             res.status(500).json({ok: false, msg: err });
         })
 
 });
+
+/* --------------------------------
+ * API | Get a specific player
+ * Method: GET
+ * Description: This will return all the players
+ * output: @players (String)
+ * -------------------------------- */
+app.get('/api/player', async(req, res) => {
+    
+    // Get the username
+    const username = req.body.username.toLowerCase();
+
+    // Get the user info from the databae
+    User.getUserInfo(username)
+        .then((userInfo) => {
+
+            // Set a temp usermap
+            let userMap = {};
+
+            // Create the output
+            const player = {
+                _id: userInfo.id,
+                userid: userInfo.id,
+                name: userInfo.username,
+                username: userInfo.username,
+                xp: userInfo.exp,
+                gamesplayed: userInfo.gamesPlayed,
+                gameswon: userInfo.gamesWon,
+                gametime: userInfo.secondsPlayed,
+                country: userInfo.country,
+                tetraleague: userInfo.tetraLeague,
+                sprint: userInfo.records.sprint,
+                joinDate: userInfo.joinDate
+            };
+
+            // Put info into userMap
+            userMap[userInfo.id] = player;
+
+            // create the correct output
+            res.json(userMap);
+        })
+        .catch((err) => {
+            res.status(500).json({ok: false, msg: err });
+        })
+
+})
 
 /* --------------------------------
  * 404 pages
