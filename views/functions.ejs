@@ -10,4 +10,25 @@ formatXP = function(xp) {
 
     return formatter.format(xp);
 }
+
+getPlayers = function(players, bracket) {
+
+    // setup the HTML handler
+    let html = ``;
+
+    // Loop trough the players
+    for(const id in players) {
+
+        // Check if this is the bracket
+        if(players[id].bracket === bracket) {
+            // Add to the HTML
+            html += '<div class="player"><p>' + players[id].username + '</p></div>';
+        }
+
+    }
+
+    // Return the HTML
+    return html;
+
+}
 %>

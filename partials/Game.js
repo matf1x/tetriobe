@@ -64,29 +64,16 @@ module.exports = {
      * ------------------------------------- */
     calculatePoints: (place) => {
         // Set a helper
-        let points = 0;
+        let points = 10;
 
-        // Switch between the places
-        switch(place) {
-            case '1':
-                points = 5;
-                break;
-            case '2':
-                points = 4;
-                break;
-            case '3': 
-                points = 3;
-                break;
-            case '4': 
-                points = 2;
-                break;
-            case '5':
-                points = 1;
-                break;
-        }
+        // calculate points
+        let total = points - (place - 1);
+
+        // Check if points is lower than 0
+        if(total < 0) total = 0;
 
         // Return the total points
-        return points;
+        return total;
     }
 
 }

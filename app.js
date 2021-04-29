@@ -123,7 +123,6 @@ app.post('/', async(req, res) => {
                 })
                 .catch((err) => {
                     // Set the submit
-                    console.log(err);
                     submit = json.createOutput(false, {}, true, 'Er is een onverwachte fout opgetreden. Probeer later opnieuw.');
                 });
             }
@@ -254,17 +253,28 @@ app.get('/api/players/refresh', auth, async(req, res) => {
  * -------------------------------- */
 app.post('/api/players/bracket', auth, async(req, res) => {
 
-    // Get the correct variables
-    const name = req.body.name;
-    const bracket = req.body.bracket;
-
     // Try to execute
     try {
-        // Update the bracket for the specific user
-        User.updateTournamentUser(name, bracket)
-            .then(() => { res.status(200).json({ok: true }); })
-            .catch((err) => { res.status(500).json({ok: false, msg: err }); })
-    } catch(err) { res.status(500).json({ok: false, msg: err }); }
+        // Get the correct variables
+        const players = req.body;
+
+        // Loop trough the players
+        for(const id in players) {
+
+            // Update the information
+            User.updateTournamentUser(players[id].username, players[id].bracket)
+                .then(() => {  })
+                .catch((err) => { console.log(err); })
+
+        }
+
+        // Send OK message
+        res.json({ok: true });
+
+    } catch(err) {
+        res.status(500).json({ok: false, msg: err });
+    }
+    
 
 })
 
@@ -370,6 +380,84 @@ app.get('/api/player', async(req, res) => {
         })
 
 })
+
+/* --------------------------------
+ * API | Add a specific player
+ * Method: POST
+ * Description: This will add a specified user
+ * params: @username (String)
+ * -------------------------------- */
+app.post('/api/player/add', async(req, res) => {
+
+    // Get the username
+    const username = req.body.username.toLowerCase();
+
+    // Setup userinfo holder
+    let userInfo= '';
+
+    // Get the User information from the API
+    User.getUserInfo(username)
+        .then(async(userInfo) => {
+            // Then, we search if the player already is known in the database
+            docs = await Player.find({userid: userInfo.id});
+
+            // Check if there are any docs known
+            if(docs.length) { 
+                res.status(500).json({ok: false, msg: 'User already registered' });
+            } else {
+                // Create a player model
+                const player = new Player({
+                    userid: userInfo.id,
+                    name: username,
+                    username: userInfo.username,
+                    xp: userInfo.exp,
+                    gamesplayed: userInfo.gamesPlayed,
+                    gameswon: userInfo.gamesWon,
+                    gametime: userInfo.secondsPlayed,
+                    country: userInfo.country,
+                    tetraleague: userInfo.tetraLeague,
+                    sprint: userInfo.records.sprint,
+                    joinDate: userInfo.joinDate
+                });
+
+                // Now, save the player to the database
+                await player.save()
+                .then(async (result) => {
+                    // Output OK
+                    res.json({ok: true });
+                })
+                .catch((err) => {
+                    // Set the submit
+                    res.status(500).json({ok: false, msg: err });
+                });
+            }
+        })
+        .catch((err) => { res.status(500).json({ok: false, msg: err }); });
+
+});
+
+/* --------------------------------
+ * API | Delete a specific player
+ * Method: POST
+ * Description: This will delete a specified user
+ * params: @username (String)
+ * -------------------------------- */
+app.post('/api/player/delete', async(req, res) => {
+
+    // Get the username
+    const username = req.body.username.toLowerCase();
+
+    // Delete the user
+    await Player.deleteMany({ username: username })
+        .then(() => {
+            res.json({ok: true});
+        })
+        .catch((err) => {
+            // Set the submit
+            res.status(500).json({ok: false, msg: err });
+        });
+
+});
 
 /* --------------------------------
  * 404 pages

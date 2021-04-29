@@ -28,7 +28,7 @@ module.exports = {
             // Get the info from the TETRIO API
             tetrioAPI.getUser({ user })
                 .then((info) => { resolve(info) })
-                .catch((err) => { console.log(err); reject(err) });
+                .catch((err) => { reject(err) });
 
         });
 
@@ -141,7 +141,7 @@ module.exports = {
      * Add tournament information
      * This will add the tournament information for the user
      * -------------- */
-    updateTournamentUser: (name, bracket) => {
+    updateTournamentUser: (id, bracket) => {
 
         return new Promise((resolve, reject) => {
 
@@ -156,7 +156,7 @@ module.exports = {
             }
 
             // Add those fields to the given user
-            Player.updateOne({username:name}, {$set: player}, { new: true, strict: false })
+            Player.updateOne({username:id}, {$set: player}, { new: true, strict: false })
                 .then((doc) => {
                     // Check if we received feedback. If not, send a reject, otherwise, send a resolve
                     if(!doc) reject();
@@ -177,9 +177,6 @@ module.exports = {
 
         // Create a new Promise
         return new Promise((resolve, reject) => {
-
-            // TEMP
-            console.log(`Update ${user.name} after the game`);
 
             // Create a const with the correct fields
             const player = {

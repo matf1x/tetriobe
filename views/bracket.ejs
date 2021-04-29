@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <%- include('./partials/head.ejs') %>
+    <meta http-equiv="Refresh" content="30">
 <body>
 
     <!-- MAIN DIV NEEDS TO BE 810 WIDTH -->
@@ -17,7 +18,7 @@
         </div>
 
         <% for(const id in players) { %>
-        <div class="user top">
+        <div class="user <% if(id < 4) { %>top<% } %>">
             <div class="user__place"><%= id %></div>
             <div class="user__name"><%= players[id].username %></div>
             <div class="user__linesGive"><%= players[id].lines.given %></div>

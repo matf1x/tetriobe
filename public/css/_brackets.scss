@@ -1,0 +1,36 @@
+.brackets {
+    display: flex;
+
+    .bracket {
+        flex: 1;
+        border-right: 2px solid var(--clr-lightdark);
+        padding: 2rem;
+
+        &:last-child {
+            border-right: 0;
+        }
+
+        h1 {
+            text-align: center;
+
+            a {
+                color: var(--clr-primary);
+                text-decoration: none;
+                transition: all .3s ease-in-out;
+                font-size: 1.75rem;
+                font-family: 'Exo 2', sans-serif;
+                font-weight: 700;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        &--players {
+            .player {
+                font-weight: 600;
+            }
+        }
+    }
+}

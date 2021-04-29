@@ -513,6 +513,47 @@ footer .socials ul li a:hover {
   font-size: 1rem;
 }
 
+.brackets {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.brackets .bracket {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border-right: 2px solid var(--clr-lightdark);
+  padding: 2rem;
+}
+
+.brackets .bracket:last-child {
+  border-right: 0;
+}
+
+.brackets .bracket h1 {
+  text-align: center;
+}
+
+.brackets .bracket h1 a {
+  color: var(--clr-primary);
+  text-decoration: none;
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+  font-size: 1.75rem;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+}
+
+.brackets .bracket h1 a:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.brackets .bracket--players .player {
+  font-weight: 600;
+}
+
 @media only screen and (max-width: 1024px) {
   .hero {
     background-size: cover;
