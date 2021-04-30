@@ -71,7 +71,13 @@ app.get('/', async(req, res) => {
  * -------------------------------- */
 app.post('/', async(req, res) => {
 
-    // First, reset submit
+    // Reset submit
+    submit = json.createOutput(false, '', false, '');
+
+    // Render the page
+    await renderMainPage(req, res);
+
+    /** First, reset submit
     submit = json.createOutput(false, '', false, '');
 
     // Get the form information
@@ -131,7 +137,7 @@ app.post('/', async(req, res) => {
             renderMainPage(req, res);
         })
         .catch((err) => { submit = json.createOutput(false, {}, true, 'De opgegeven TETRIO gebruiker werd niet gevonden.'); renderMainPage(req, res); });
-
+    **/
 });
 
 /* --------------------------------
@@ -285,10 +291,10 @@ app.post('/api/players/bracket', auth, async(req, res) => {
  * Params: @output (String)
  * -------------------------------- */
 app.post('/api/games/add', auth, async(req, res) => {
-
+    
     // Convert the output
     try {
-        Game.convertOutput(req.body.output)
+        Game.convertOutput(req.body.results)
             .then((plrs) => {
 
                 // Loop trough the players
