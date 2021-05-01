@@ -356,4 +356,12 @@
             }
         }
     }
+
+    .brackets {
+        display: flex;
+
+        .bracket {
+            flex: 1;
+        }
+    }
   }

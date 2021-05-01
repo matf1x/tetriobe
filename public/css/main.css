@@ -513,12 +513,6 @@ footer .socials ul li a:hover {
   font-size: 1rem;
 }
 
-.brackets {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .brackets .bracket {
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -866,6 +860,16 @@ footer .socials ul li a:hover {
   }
   .whois .content p {
     max-width: 600px;
+  }
+  .brackets {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .brackets .bracket {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
   }
 }
 /*# sourceMappingURL=main.css.map */
