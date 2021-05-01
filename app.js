@@ -151,7 +151,7 @@ app.get('/bracket/:id', async(req, res) => {
     // Setup helpers
     let isAlert = false;
     let alertTitle = '';
-    const bracket = req.params['id']
+    const bracket = parseInt(req.params['id']);
 
     // Get the players from the specific bracket
     User.getBracketPlayers(bracket)
@@ -292,6 +292,8 @@ app.post('/api/players/bracket', auth, async(req, res) => {
  * -------------------------------- */
 app.post('/api/games/add', auth, async(req, res) => {
     
+    console.log(req.body.results);
+
     // Convert the output
     try {
         Game.convertOutput(req.body.results)
