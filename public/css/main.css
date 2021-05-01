@@ -544,8 +544,22 @@ footer .socials ul li a:hover {
           transform: scale(1.05);
 }
 
+.brackets .bracket--players {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 0.75rem;
+  -ms-grid-columns: 50% auto;
+      grid-template-columns: 50% auto;
+  width: 100%;
+}
+
 .brackets .bracket--players .player {
   font-weight: 600;
+  padding: 0;
+}
+
+.brackets .bracket--players .player p {
+  padding: 0;
 }
 
 @media only screen and (max-width: 1024px) {
