@@ -70,7 +70,7 @@ module.exports = {
         // Create a new Promise
         return new Promise((resolve, reject) => {
             // Search all players
-            Player.find({bracket:bracket}).sort('-points').exec((err, users) => {
+            Player.find({bracket:bracket}).sort({'points': -1, 'lines.given': -1}).exec((err, users) => {
 
                 // Check for errors
                 if(err) reject(err);
